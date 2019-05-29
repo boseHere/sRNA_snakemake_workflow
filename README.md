@@ -55,19 +55,19 @@ samples:
 
 #### trim
 
-##### min_length
+##### *min_length
 
 Defaulted to 19. Reads shorter than this int will be discarded.
 
-##### max_length
+##### *max_length
 
 Defaulted to 26. Read longer than this int will be discarded.
 
-##### adapter_seq
+##### *adapter_seq
 
 Defaulted to Illumina adapter sequence. Specifies the adapter sequence. If left blank, workflow will attempt to auto-detect the adapter sequence and proceed to trim it via trimgalore
 
-##### quality
+##### *quality
 
 Defaulted to 30. Reads with quality lower than this score will be discarded
 
