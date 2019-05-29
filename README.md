@@ -57,7 +57,7 @@ samples:
 
 #### trim
 
-##### * min_length
+* ##### min_length
 
 Defaulted to 19. Reads shorter than this int will be discarded.
 
