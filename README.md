@@ -36,6 +36,7 @@ main_file
 
 │   |   ├──chloroplast_mitochondrion_genome.ebwt (can be multiple)
 
+Sample files should be put in data/1_raw/
 
 ### config.yaml requirements
 
