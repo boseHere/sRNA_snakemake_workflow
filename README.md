@@ -29,8 +29,11 @@ main_file
 │     ├──rfam_reference_genome.fasta
 
 │     ├──rfam_reference_genome.ebwt (can be multiple)
-│  ├──chloroplast_mitochondrion
+
+│  ├──chloroplast_mitochondrion'
+
 │     ├──chloroplast_mitochondrion_genome.fasta
+
 │     ├──chloroplast_mitochondrion_genome.ebwt (can be multiple)
 
 
