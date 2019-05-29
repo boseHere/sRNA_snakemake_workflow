@@ -4,7 +4,7 @@ Trims, filters, clusters, and aligns small RNA samples
 
 ### Dependencies
 
-This workflow requires samtools version 1.9, bowtie --version 1.2.2
+This workflow requires trim_galore version 0.6.2, samtools version 1.9, bowtie version 1.2.2, ShortStack version 3.8.5
 
 ### Setup requirements
 
