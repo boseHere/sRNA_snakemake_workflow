@@ -11,14 +11,23 @@ This workflow requires samtools version 1.9, bowtie --version 1.2.2
 Requires snakemake. Directories should be set up as follows BEFORE running snakemake:
 
 main_file
+
 ├──Snakefile
+
 ├──config.yaml
+
 ├──data
+
 │  ├──1_raw
+
 │     ├──samples.fastq.gz (can be multiple)
+
 ├──genomes
+
 │  ├──rfam
+
 │     ├──rfam_reference_genome.fasta
+
 │     ├──rfam_reference_genome.ebwt (can be multiple)
 │  ├──chloroplast_mitochondrion
 │     ├──chloroplast_mitochondrion_genome.fasta
