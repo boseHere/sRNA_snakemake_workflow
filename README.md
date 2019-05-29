@@ -18,9 +18,9 @@ main_file
 
 ├──data
 
-│   ├──1_raw
+│      ├──1_raw
 
-│      ├──samples.fastq.gz (can be multiple)
+│         ├──samples.fastq.gz (can be multiple)
 
 ├──genomes
 
