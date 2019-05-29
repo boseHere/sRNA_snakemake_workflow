@@ -20,21 +20,21 @@ main_file
 
 │      ├──1_raw
 
-│         ├──samples.fastq.gz (can be multiple)
+│    |     ├──samples.fastq.gz (can be multiple)
 
 ├──genomes
 
 │   ├──rfam
 
-│      ├──rfam_reference_genome.fasta
+│   |   ├──rfam_reference_genome.fasta
 
-│      ├──rfam_reference_genome.ebwt (can be multiple)
+│   |  ├──rfam_reference_genome.ebwt (can be multiple)
 
 │   ├──chloroplast_mitochondrion'
 
-│      ├──chloroplast_mitochondrion_genome.fasta
+│   |   ├──chloroplast_mitochondrion_genome.fasta
 
-│      ├──chloroplast_mitochondrion_genome.ebwt (can be multiple)
+│   |   ├──chloroplast_mitochondrion_genome.ebwt (can be multiple)
 
 
 ### config.yaml requirements
