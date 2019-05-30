@@ -12,7 +12,7 @@ SAMPLES = config["samples"]
 # Run workflow
 rule all:
 	input:
-		"data/6_converted/converted.fq"
+		expand("data/7_fastas/{sample}.fasta", sample=SAMPLES)
 
 
 # Trim reads
@@ -130,6 +130,14 @@ rule convert_final:
 
 
 # Works up to here
+rule split_fastas:
+	input:
+		"data/6_converted/converted.fq"
+	output:
+		expand("data/7_fastas/{sample}.fasta", sample=SAMPLES)
+	script:
+		"scripts/split_fastq_to_fastas.py"
+
 
 
 
