@@ -27,7 +27,6 @@ rule trim:
 		adapter_seq = config["trim"]["adapter_seq"],
 		quality = config["trim"]["quality"],
 		out_dir = "data/2_trimmed/"
-	threads: 1	
 	shell:
 		"trim_galore "
 		"--adapter {params.adapter_seq} "
@@ -38,6 +37,8 @@ rule trim:
 		"--quality {params.quality} "
 		"{input}"
 
+
+# Filter out junk mRNA
 rule filter_rfam:
 	input:
 		"data/2_trimmed/{sample}_trimmed.fq.gz"
@@ -57,6 +58,8 @@ rule filter_rfam:
 			"{params.rfam_genome} "
 			"{input}"	
 
+
+# Filter out chloroplast and mitochondrial RNA
 rule filter_c_m:
 	input:
 		"data/3_rfam_filtered/{sample}_rfam_filtered.fq"
@@ -76,7 +79,7 @@ rule filter_c_m:
 		"{input}"
 
 
-# Working up to here
+# Cluster and align reads
 rule cluster:
 	input:
 		expand("data/4_c_m_filtered/{sample}_c_m_filtered.fq", sample=SAMPLES)
@@ -103,6 +106,7 @@ rule cluster:
 		"--outdir data/5_clustered/"
 
 
+# Extract mapped reads into SAM file
 rule convert_1:
 	input:
 		"data/5_clustered/merged_alignments.bam"
@@ -111,6 +115,8 @@ rule convert_1:
 	shell:
 		"samtools view -F4 -h {input} > {output}"
 
+
+# Convert SAM file to BAM file
 rule convert_2:
 	input:
 		sam="data/6_converted/int1/int1.sam",
@@ -120,6 +126,8 @@ rule convert_2:
 	shell:
 		"samtools view -S -b -t {input.counts} {input.sam} > {output}"
 
+
+# Convert BAM file to Fastq file
 rule convert_final:
 	input:
 		"data/6_converted/int2/int2.bam"
@@ -129,7 +137,7 @@ rule convert_final:
 		"samtools bam2fq -t {input} > {output}"
 
 
-# Works up to here
+# Split Fastq file into multiple Fasta files by Sample name
 rule split_fastas:
 	input:
 		"data/6_converted/converted.fq"
@@ -137,8 +145,4 @@ rule split_fastas:
 		expand("data/7_fastas/{sample}.fasta", sample=SAMPLES)
 	script:
 		"scripts/split_fastq_to_fastas.py"
-
-
-
-
 
