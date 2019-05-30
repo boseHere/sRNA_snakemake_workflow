@@ -16,3 +16,7 @@ filter_rfam:
 
 filter_c_m:
     genome : ./data/genomes/chloroplast_mitocondrion_bowtie-index/TAIR10_chrCM
+
+cluster:
+    bowtie_cores : 1
+    genome : ./data/genomes/ro18_v2_fixed_ids_shortstack-index/ro18_v2_standard_output.final.scaffolds.fixed_ids.fasta
