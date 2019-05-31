@@ -12,7 +12,7 @@ SAMPLES = config["samples"]
 # Run workflow
 rule all:
 	input:
-		expand("data/7_fastas/{sample}.fastq", sample=SAMPLES)
+		expand("data/7_fastqs/{sample}.fastq", sample=SAMPLES)
 
 
 # Trim reads
@@ -105,31 +105,20 @@ rule cluster:
 		"--outdir data/5_clustered/"
 
 
-# Extract mapped reads into SAM file
+# Extract mapped reads into BAM file
 rule convert_1:
 	input:
 		"data/5_clustered/merged_alignments.bam"
 	output:
-		"data/6_converted/int1/int1.sam"
+		"data/6_converted/int1/int1.bam"
 	shell:
-		"samtools view -F4 -h {input} > {output}"
-
-
-# Convert SAM file to BAM file
-rule convert_2:
-	input:
-		sam="data/6_converted/int1/int1.sam",
-		counts="data/5_clustered/Counts.txt"
-	output:
-		"data/6_converted/int2/int2.bam"
-	shell:
-		"samtools view -S -b -t {input.counts} {input.sam} > {output}"
+		"samtools view -F4 -b {input} > {output}"
 
 
 # Convert BAM file to Fastq file
-rule convert_final:
+rule convert_2:
 	input:
-		"data/6_converted/int2/int2.bam"
+		"data/6_converted/int1/int1.bam"
 	output:
 		"data/6_converted/converted.fq"
 	shell:
@@ -141,11 +130,6 @@ rule split_fastqs:
 	input:
 		"data/6_converted/converted.fq"
 	output:
-		expand("data/7_fastas/{sample}.fastq", sample=SAMPLES)
+		expand("data/7_fastqs/{sample}.fastq", sample=SAMPLES)
 	script:
 		"scripts/match_qual_v2.py"
-
-#rule get_quality:
-#	input:
-#		"data/6_converted/converted.fq"
-
