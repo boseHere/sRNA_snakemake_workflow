@@ -8,11 +8,11 @@ trim:
     quality : 30
 
 filter_rfam:
-    genome : ./data/genomes/rfam_athaliana/rfam_14_nomirna_a_thaliana
+    genome : ./data/genomes/
 
 filter_c_m:
-    genome : ./data/genomes/chloroplast_mitocondrion_bowtie-index/TAIR10_chrCM
+    genome : ./data/genomes/
 
 cluster:
     bowtie_cores : 1
-    genome : ./data/genomes/ro18_v2_fixed_ids_shortstack-index/ro18_v2_standard_output.final.scaffolds.fixed_ids.fasta
+    genome : ./data/genomes/
