@@ -12,7 +12,7 @@ SAMPLES = config["samples"]
 # Run workflow
 rule all:
 	input:
-		expand("data/7_fastas/{sample}.fasta", sample=SAMPLES)
+		expand("data/7_fastas/{sample}.fastq", sample=SAMPLES)
 
 
 # Trim reads
@@ -25,15 +25,14 @@ rule trim:
 		min_length = config["trim"]["min_length"],
 		max_length = config["trim"]["max_length"],
 		adapter_seq = config["trim"]["adapter_seq"],
-		quality = config["trim"]["quality"],
-		out_dir = "data/2_trimmed/"
+		quality = config["trim"]["quality"]
 	shell:
 		"trim_galore "
 		"--adapter {params.adapter_seq} "
 		"--gzip "
 		"--length {params.min_length} "
 		"--max_length {params.max_length} "
-                        "--output_dir {params.out_dir} "
+                        "--output_dir data/2_trimmed/ "
 		"--quality {params.quality} "
 		"{input}"
 
@@ -137,12 +136,11 @@ rule convert_final:
 		"samtools bam2fq -t {input} > {output}"
 
 
-# Split Fastq file into multiple Fasta files by Sample name
-rule split_fastas:
+# Split Fastq file into multiple Fastq files by Sample name
+rule split_fastqs:
 	input:
 		"data/6_converted/converted.fq"
 	output:
-		expand("data/7_fastas/{sample}.fasta", sample=SAMPLES)
+		expand("data/7_fastas/{sample}.fastq", sample=SAMPLES)
 	script:
-		"scripts/split_fastq_to_fastas.py"
-
+		"scripts/match_qual_v2.py"
