@@ -1,5 +1,5 @@
 # Author: Maya Bose
-# Date:
+# Date: 5/31/19
 # Run sRNA mapping workflow
 # See README.md for usage instructions
 
@@ -136,7 +136,7 @@ rule convert_final:
 		"samtools bam2fq -t {input} > {output}"
 
 
-# Split Fastq file into multiple Fastq files by Sample name
+# Split Fastq file into multiple Fasta files by Sample name
 rule split_fastqs:
 	input:
 		"data/6_converted/converted.fq"
@@ -144,3 +144,8 @@ rule split_fastqs:
 		expand("data/7_fastas/{sample}.fastq", sample=SAMPLES)
 	script:
 		"scripts/match_qual_v2.py"
+
+#rule get_quality:
+#	input:
+#		"data/6_converted/converted.fq"
+
