@@ -12,7 +12,7 @@ SAMPLES = config["samples"]
 # Run workflow
 rule all:
 	input:
-		expand("data/7_fastqs/{sample}.fastq", sample=SAMPLES)
+		expand("data/8_fastqs/{sample}.fastq",sample=SAMPLES)
 
 
 # Trim reads
@@ -104,13 +104,31 @@ rule cluster:
 		"--genomefile {params.genome} "
 		"--outdir data/5_clustered/"
 
+rule split_by_sample:
+	input:
+		"data/5_clustered/merged_alignments.bam"
+	output:
+		expand("{sample}_c_m_filtered.bam",sample=SAMPLES)
+	shell:
+		"samtools split "
+  		"-f '%!.bam' "
+		"{input}"
+
+rule rename:
+	input:
+		"{sample}_c_m_filtered.bam"
+	output:
+		"data/6_split_by_sample/{sample}_aligned.bam"
+	shell:
+		"mv {input} {output}"
+
 
 # Extract mapped reads into BAM file
 rule convert_1:
 	input:
-		"data/5_clustered/merged_alignments.bam"
+		"data/6_split_by_sample/{sample}_aligned.bam"
 	output:
-		"data/6_converted/int1/int1.bam"
+		"data/7_converted/int1/{sample}_int1.bam"
 	shell:
 		"samtools view -F4 -b {input} > {output}"
 
@@ -118,9 +136,9 @@ rule convert_1:
 # Convert BAM file to Fastq file
 rule convert_2:
 	input:
-		"data/6_converted/int1/int1.bam"
+		"data/7_converted/int1/{sample}_int1.bam"
 	output:
-		"data/6_converted/converted.fq"
+		"data/7_converted/{sample}_converted.fq"
 	shell:
 		"samtools bam2fq -t {input} > {output}"
 
@@ -128,8 +146,8 @@ rule convert_2:
 # Split Fastq file into multiple Fasta files by Sample name
 rule split_fastqs:
 	input:
-		"data/6_converted/converted.fq"
+		"data/7_converted/{sample}_converted.fq"
 	output:
-		expand("data/7_fastqs/{sample}.fastq", sample=SAMPLES)
+		"data/8_fastqs/{sample}.fastq"
 	script:
 		"scripts/match_qual_v2.py"
