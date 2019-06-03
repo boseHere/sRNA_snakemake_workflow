@@ -104,6 +104,8 @@ rule cluster:
 		"--genomefile {params.genome} "
 		"--outdir data/5_clustered/"
 
+
+# Split merged alignments file into multiple BAM files by sample name
 rule split_by_sample:
 	input:
 		"data/5_clustered/merged_alignments.bam"
@@ -114,7 +116,9 @@ rule split_by_sample:
   		"-f '%!.bam' "
 		"{input}"
 
-rule rename:
+
+# Move BAM files to destination folder
+rule move:
 	input:
 		"{sample}_c_m_filtered.bam"
 	output:
@@ -123,7 +127,7 @@ rule rename:
 		"mv {input} {output}"
 
 
-# Extract mapped reads into BAM file
+# Extract mapped reads into BAM files
 rule convert_1:
 	input:
 		"data/6_split_by_sample/{sample}_aligned.bam"
@@ -133,7 +137,7 @@ rule convert_1:
 		"samtools view -F4 -b {input} > {output}"
 
 
-# Convert BAM file to Fastq file
+# Convert BAM files to Fastq files
 rule convert_2:
 	input:
 		"data/7_converted/int1/{sample}_int1.bam"
@@ -143,8 +147,8 @@ rule convert_2:
 		"samtools bam2fq -t {input} > {output}"
 
 
-# Split Fastq file into multiple Fasta files by Sample name
-rule split_fastqs:
+# Get encoding quality for Fastq files
+rule retrieve_encoding_quality:
 	input:
 		"data/7_converted/{sample}_converted.fq"
 	output:
