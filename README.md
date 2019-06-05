@@ -43,12 +43,12 @@ This workflow requires trim_galore version 0.6.2, samtools version 1.9, bowtie v
 
 Give names of samples without file extensions (should be in fastq.gz). 
 
-Example
+*Example*
 
-samples:
-    -sample1
-    -sample2
-    -sample3
+samples:    
+    -sample1    
+    -sample2    
+    -sample3    
     
 * Note: Don't use tab to do the indent (yaml doesn't like it). Use 4 spaces instead.
 
