@@ -4,8 +4,15 @@ Trims, filters, clusters, and aligns small RNA samples
 
 Table of Contents
 =================
-* [Dependencies](#dependencies)
-* [File Setup](#file_setup)
+* [Dependencies](#dependencies)    
+* [File Setup](#file-setup)    
+* [config.yaml Requirements](#config-yaml-requirements)    
+  -[Samples](#samples)    
+  -[Genomes](#genomes)    
+  -[Trim](#trim)    
+  -[Filter_rfam](#filter_rfam)    
+  -[Filter_c_m](#filter_c_m)    
+  -[Cluster](#cluster)    
 
 
 ### Dependencies
@@ -30,9 +37,9 @@ This workflow requires trim_galore version 0.6.2, samtools version 1.9, bowtie v
 │-Snakefile     
 │-config.yaml    
 
-### config.yaml requirements
+### config.yaml Requirements
 
-#### samples
+#### Samples
 
 Give names of samples without file extensions (should be in fastq.gz). 
 
@@ -45,11 +52,11 @@ samples:
     
 * Note: Don't use tab to do the indent (yaml doesn't like it). Use 4 spaces instead.
 
+#### Genomes
 
+#### Trim
 
-#### trim
-
-* ##### min_length
+    * ##### min_length
 
    Defaulted to 19. Reads shorter than this int will be discarded.
 
