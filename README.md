@@ -13,35 +13,20 @@ This workflow requires trim_galore version 0.6.2, samtools version 1.9, bowtie v
 
 ### File Setup
 
-Snakemake requires that files are in certain directories before running. 
-
-main_file
-
-├──Snakefile
-
-├──config.yaml
-
-├──data
-
-│    ├──1_raw
-
-│        ├──samples.fastq.gz (can be multiple)
-
-├──genomes
-
-│││├──rfam
-
-││││││├──rfam_reference_genome.fasta
-
-││││││├──rfam_reference_genome.ebwt (can be multiple)
-
-│││├──chloroplast_mitochondrion'
-
-││││││├──chloroplast_mitochondrion_genome.fasta
-
-││││││├──chloroplast_mitochondrion_genome.ebwt (can be multiple)
-
-Sample files should be put in data/1_raw/
+|-data
+│   |---1_raw
+│   |------samples.fastq.gz
+│   |---genomes
+│   |-----chloroplast_mitocondrion_bowtie-index
+│   |--------genome fasta + index files
+│   |-----rfam_athaliana
+│   |--------genome fasta + index files
+│   |-----ro18_v2_fixed_ids_shortstack-index
+│   |--------genome fasta + index files
+│-scripts
+│   |---match_qual_v2.py
+│-Snakefile
+│-config.yaml
 
 ### config.yaml requirements
 
