@@ -23,17 +23,17 @@ This workflow requires trim_galore version 0.6.2, samtools version 1.9, bowtie v
 ### File Setup
 
 |-data    
-│    |---1_raw    
-│    |---|---samples.fastq.gz    
-│    |---genomes    
-│    |---|--chloroplast_mitocondrion_bowtie-index    
-│    |---|---|---genome fasta + index files    
-│    |---|--rfam_athaliana    
-│    |---|---|---genome fasta + index files    
-│    |---|---ro18_v2_fixed_ids_shortstack-index    
-│    |---|---|---genome fasta + index files    
+│     |---1_raw    
+│     |---|---samples.fastq.gz    
+│     |---genomes    
+│     |---|--chloroplast_mitocondrion_bowtie-index    
+│     |---|---|---genome fasta + index files    
+│     |---|--rfam_athaliana    
+│     |---|---|---genome fasta + index files    
+│     |---|---ro18_v2_fixed_ids_shortstack-index    
+│     |---|---|---genome fasta + index files    
 │-scripts    
-│    |---match_qual_v2.py    
+│     |---match_qual_v2.py    
 │-Snakefile     
 │-config.yaml    
 
@@ -76,16 +76,11 @@ samples:
 
 #### filter_rfam
 
-* ##### genome
-
-   Given correct directory structure, this should ALWAYS be formated as ./data/genomes/rfam/rfam_reference_genome
-
-
-
+* ##### threads    
+Defaulted to 1, can be changed according to server capabilities
+    
 #### filter_c_m
 
-* ##### genome
-
-   Given correct directory structure, this should ALWAYS be formated as ./data/genomes/chloroplast_mitochondrion/chloroplast_mitochondrion_genome
-
-
+* ##### threads    
+Defaulted to 1, can be changed according to server capabilities
+   
