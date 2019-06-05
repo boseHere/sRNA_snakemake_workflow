@@ -2,15 +2,17 @@
 
 Trims, filters, clusters, and aligns small RNA samples
 
-# Table of Contents
-1. Dependencies (#depn)
-2. File Setup (#usage)
+Table of Contents
+=================
+* [Dependencies] (#depn)
+* [File Setup] (###usage)
 
-<a name="depn"></a>
+<a name="###depn"/>
 ### Dependencies
 
 This workflow requires trim_galore version 0.6.2, samtools version 1.9, bowtie version 1.2.2, ShortStack version 3.8.5
 
+<a name="usage"/>
 ### File Setup
 
 |-data    
