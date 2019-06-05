@@ -74,13 +74,18 @@ samples:
 
 
 
-#### filter_rfam
+#### Filter_rfam
 
 * ##### threads    
 Defaulted to 1, can be changed according to server capabilities
     
-#### filter_c_m
+#### Filter_c_m
 
 * ##### threads    
+Defaulted to 1, can be changed according to server capabilities
+
+#### Cluster
+
+* ##### bowtie_cores    
 Defaulted to 1, can be changed according to server capabilities
    
