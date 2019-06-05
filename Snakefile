@@ -43,8 +43,10 @@ rule filter_rfam:
 		"data/2_trimmed/{sample}_trimmed.fq.gz"
 	output:
 		"data/3_rfam_filtered/{sample}_rfam_filtered.fq"
+	threads:
+		config["filter_rfam"]["threads"]
 	params:
-		rfam_genome = config["filter_rfam"]["genome"]
+		rfam_genome = config["genomes"]["junk_mrna"]
 	shell:
 			"bowtie "
 			"-v 0 "
@@ -53,6 +55,7 @@ rule filter_rfam:
 			"-a "
 			"--nomaqround "
 			"--norc "
+			"--threads {threads} "
 			"--un {output} "
 			"{params.rfam_genome} "
 			"{input}"	
@@ -64,8 +67,10 @@ rule filter_c_m:
 		"data/3_rfam_filtered/{sample}_rfam_filtered.fq"
 	output:
 		"data/4_c_m_filtered/{sample}_c_m_filtered.fq"
+	threads:
+		config["filter_c_m"]["threads"]
 	params:
-		c_m_genome = config["filter_c_m"]["genome"]
+		c_m_genome = config["genomes"]["chloro_mitochondria"]
 	shell:
 		"bowtie "
 		"-v 0 "
@@ -73,6 +78,7 @@ rule filter_c_m:
 		"--best "
 		"-a "
 		"--nomaqround "
+		"--threads {threads} "
 		"--un {output} "
 		"{params.c_m_genome} "
 		"{input}"
@@ -88,7 +94,7 @@ rule cluster:
 		"data/5_clustered/merged_alignments.bam"
 	params:
 		bowtie_cores = config["cluster"]["bowtie_cores"],
-		genome = config["cluster"]["genome"]
+		genome = config["genomes"]["reference_genome"]
 	shell:
 		"rm -r data/5_clustered && " # Need this line because Snakemake
 				     # creates this dir, but ShortStack

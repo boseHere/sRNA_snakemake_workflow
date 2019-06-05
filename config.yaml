@@ -1,6 +1,15 @@
 samples:
-   - sample1
-    
+    - TK1_01_S1_L001_R1_001
+    - TK1_02_S2_L001_R1_001
+    - TK1_03_S3_L001_R1_001
+    - TK1_04_S4_L001_R1_001
+
+genomes:
+	junk_mrna : ./data/genomes/rfam_athaliana/rfam_14_nomirna_a_thaliana
+	chloro_mitochondria : ./data/genomes/chloroplast_mitocondrion_bowtie-index/TAIR10_chrCM
+	reference_genome : ./data/genomes/ro18_v2_fixed_ids_shortstack-index/ro18_v2_standard_output.final.scaffolds.fixed_ids.fasta
+
+
 trim:
     min_length : 19
     max_length : 26
@@ -8,11 +17,11 @@ trim:
     quality : 30
 
 filter_rfam:
-    genome : ./data/genomes/
-
+    threads : 1
+    
 filter_c_m:
-    genome : ./data/genomes/
+    threads : 1
 
 cluster:
     bowtie_cores : 1
-    genome : ./data/genomes/
+ 
