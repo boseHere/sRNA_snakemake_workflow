@@ -14,7 +14,9 @@ This workflow requires trim_galore version 0.6.2, samtools version 1.9, bowtie v
 ### File Setup
 
 |-data
+
 │   |---1_raw
+
 │   |------samples.fastq.gz
 │   |---genomes
 │   |-----chloroplast_mitocondrion_bowtie-index
