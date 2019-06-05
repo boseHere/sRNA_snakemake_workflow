@@ -2,13 +2,18 @@
 
 Trims, filters, clusters, and aligns small RNA samples
 
+# Table of Contents
+1. Dependencies (#depn)
+2. File Setup (#usage)
+
+<a name="depn"></a>
 ### Dependencies
 
 This workflow requires trim_galore version 0.6.2, samtools version 1.9, bowtie version 1.2.2, ShortStack version 3.8.5
 
-### Setup requirements
+### File Setup
 
-Requires snakemake. Directories should be set up as follows BEFORE running snakemake:
+Snakemake requires that files are in certain directories before running. 
 
 main_file
 
@@ -18,9 +23,9 @@ main_file
 
 ├──data
 
-│││├──1_raw
+│    ├──1_raw
 
-││││││├──samples.fastq.gz (can be multiple)
+│        ├──samples.fastq.gz (can be multiple)
 
 ├──genomes
 
