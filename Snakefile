@@ -2,6 +2,7 @@
 # Date: 5/31/19
 # Run sRNA mapping workflow
 # See README.md for usage instructions
+# Author: Maya Bose
 
 
 # Get configuration
@@ -49,7 +50,6 @@ rule filter_rfam:
 	params:
 		rfam_genome = config["genomes"]["junk_mrna"],
 		path = config["paths"]["bowtie"]
-
 	shell:
 			"{params.path} "
 			"-v 0 "
@@ -98,7 +98,6 @@ rule cluster:
 		bowtie_cores = config["cluster"]["bowtie_cores"],
 		genome = config["genomes"]["reference_genome"],
 		path = config["paths"]["ShortStack"]
-
 	shell:
 		"rm -r data/5_clustered && " # Need this line because Snakemake
 				     # creates this dir, but ShortStack
@@ -123,7 +122,6 @@ rule split_by_sample:
 		expand("{sample}_c_m_filtered.bam",sample=SAMPLES)
 	params:
 		path = config["paths"]["samtools"]
-
 	shell:
 		"{params.path} " 
 		"split "
@@ -151,7 +149,6 @@ rule convert_1:
 		config["convert_1"]["threads"]
 	params:
 		path = config["paths"]["samtools"]
-
 	shell:
 		"{params.path} "
 		"view "
@@ -169,7 +166,6 @@ rule convert_2:
 		"data/7_converted/{sample}_converted.fq"
 	params:
 		path = config["paths"]["samtools"]
-
 	shell:
 		"{params.path} "
 		"bam2fq "
