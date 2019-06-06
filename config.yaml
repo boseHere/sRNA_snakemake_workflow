@@ -27,8 +27,6 @@ filter_c_m:
 
 cluster:
     bowtie_cores : 1
+    
 convert_1:
     threads : 1
-
-
- 
