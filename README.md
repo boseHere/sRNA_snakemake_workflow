@@ -48,6 +48,7 @@ Table of Contents
 
 
 
+
 ### config.yaml Requirements
 
 #### Samples
@@ -95,15 +96,15 @@ Give absolute paths to the trim_galore, bowtie, ShortStack, and samtools softwar
 #### Filter_rfam
 
 * ##### threads    
-Defaulted to 1, can be changed according to server capabilities
+   Defaulted to 1, can be changed according to server capabilities
     
 #### Filter_c_m
 
 * ##### threads    
-Defaulted to 1, can be changed according to server capabilities
+   Defaulted to 1, can be changed according to server capabilities
 
 #### Cluster
 
 * ##### bowtie_cores    
-Defaulted to 1, can be changed according to server capabilities
+   Defaulted to 1, can be changed according to server capabilities
    
