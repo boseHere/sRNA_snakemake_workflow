@@ -6,7 +6,7 @@ Table of Contents
 =================
 * [Dependencies](#dependencies)    
 * [File Setup](#file-setup)    
-* [config.yaml Requirements](#config-yaml-requirements)    
+* [config\.yaml Requirements](#config-yaml-requirements)    
   -[Samples](#samples)    
   -[Genomes](#genomes)    
   -[Trim](#trim)    
