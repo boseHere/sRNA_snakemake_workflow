@@ -58,9 +58,9 @@ Give names of samples without file extensions (should be in fastq.gz).
 *Example*
 
 samples:    
-      -sample1    
-      -sample2    
-      -sample3    
+       - sample1    
+       - sample2    
+       - sample3    
     
 * Note: Don't use tab to do the indent (yaml doesn't like it). Use 4 spaces instead.
 
