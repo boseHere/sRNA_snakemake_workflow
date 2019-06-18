@@ -17,7 +17,15 @@ Table of Contents
 
 ### Dependencies
 
-This workflow requires trim_galore version 0.6.2, samtools version 1.9, bowtie version 1.2.2, ShortStack version 3.8.5
+* Trimgalore v.0.6.2    
+* cutadapt v.2.3    
+* fastqc v.0.11.7    
+* samtools v.1.9    
+* bowtie v.1.2.2    
+* ShortStack v.3.8.5    
+* RNAfold v.2.3.2    
+* XZ Utils 4.999.9 beta    
+* liblzma 4.999.9 beta    
 
 
 ### File Setup
@@ -37,6 +45,9 @@ This workflow requires trim_galore version 0.6.2, samtools version 1.9, bowtie v
 │-Snakefile     
 │-config.yaml    
 
+
+
+
 ### config.yaml Requirements
 
 #### Samples
@@ -52,9 +63,16 @@ samples:
     
 * Note: Don't use tab to do the indent (yaml doesn't like it). Use 4 spaces instead.
 
+
 #### Genomes
 
+
+#### Paths
+
+Give absolute paths to the trim_galore, bowtie, ShortStack, and samtools software. These can be obtaned via "$ which trim_galore"
+
 #### Trim
+
 
 * ##### min_length
 
