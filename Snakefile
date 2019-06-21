@@ -15,6 +15,7 @@ rule all:
 	input:
 		expand("data/8_fastqs/{sample}.fastq", sample=SAMPLES)
 
+rule index_genomes: 
 
 # Trim reads
 rule trim:
@@ -30,7 +31,7 @@ rule trim:
 		path = config["paths"]["trim_galore"]
 	shell:
 		"{params.path} "
-		"--adapter {params.adapter_seq} "
+		#"--adapter {params.adapter_seq} "
 		"--gzip "
 		"--length {params.min_length} "
 		"--max_length {params.max_length} "
@@ -39,7 +40,7 @@ rule trim:
 		"{input}"
 
 
-# Filter out junk mRNA
+# Filter out junk RNA
 rule filter_rfam:
 	input:
 		"data/2_trimmed/{sample}_trimmed.fq.gz"
