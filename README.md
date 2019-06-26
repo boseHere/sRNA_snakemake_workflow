@@ -4,7 +4,7 @@ Trims, filters, clusters, and aligns small RNA samples
 
 Table of Contents
 =================
-* [Installing Snakemake] (#install)
+* [Installing Snakemake](#install)
 * [Dependencies](#dependencies)    
 * [File Setup](#file-setup)    
 * [config\.yaml Requirements](#config-yaml-requirements)    
@@ -35,23 +35,22 @@ Snakemake documentation for installation can be found [here](https://snakemake.r
 
 ### File Setup
 
-|-data    
-│      |---1_raw    
+|-data/    
+│       |---1_raw/    
 │       |---|---samples.fastq.gz    
-│       |---genomes    
-│      |---|--chloroplast_mitocondrion_bowtie-index    
-│      |---|---|---genome fasta + index files    
-│      |---|--rfam_athaliana    
-│      |---|---|---genome fasta + index files    
-│      |---|---ro18_v2_fixed_ids_shortstack-index    
-│      |---|---|---genome fasta + index files    
-│-scripts    
-│      |---match_qual_v2.py    
+│       |---genomes/    
+│       |---|--chloroplast_mitocondrion_bowtie-index/    
+│       |---|---|---genome fasta + index files    
+│       |---|--rfam_athaliana/    
+│       |---|---|---genome fasta + index files    
+│       |---|---ro18_v2_fixed_ids_shortstack-index/    
+│       |---|---|---genome fasta + index files    
+│-scripts/    
+│      |---match_qual_v2.py
+│      |---fastq_readlength_profile.py
+│-output_logs/
 │-Snakefile     
 │-config.yaml    
-
-
-
 
 
 ### config\.yaml Requirements
