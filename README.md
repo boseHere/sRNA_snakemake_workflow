@@ -4,6 +4,7 @@ Trims, filters, clusters, and aligns small RNA samples
 
 Table of Contents
 =================
+* [Installing Snakemake] (#install)
 * [Dependencies](#dependencies)    
 * [File Setup](#file-setup)    
 * [config\.yaml Requirements](#config-yaml-requirements)    
@@ -14,6 +15,10 @@ Table of Contents
   -[Filter_c_m](#filter_c_m)    
   -[Cluster](#cluster)    
 
+
+### Installing Snakemake
+
+Snakemake documentation for installation can be found [here](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html)    
 
 ### Dependencies
 
