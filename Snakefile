@@ -13,9 +13,25 @@ SAMPLES = config["samples"]
 # Run workflow
 rule all:
 	input:
-		expand("data/8_fastqs/{sample}.fastq", sample=SAMPLES)
+		expand("data/9_fastqc_reports/{sample}_fastqc.zip",sample=SAMPLES)
 
-rule index_genomes: 
+		
+#rule index_genomes:
+#	input: 
+#		config["genomes"]
+#	output:
+#		"data/genomes/*/*.ebwt "
+#	params:
+#		need_to_index = config["indexing_genomes_options"]["index_genomes"]
+#	priority: 1
+#	shell:
+#		"if [{params.need_to_index} == 'y']; then "
+#		"for file in {input} "
+#		"do "
+#		"bowtie-build $file ${file::-6} "
+#		"done "
+#		"fi "
+		
 
 # Trim reads
 rule trim:
@@ -37,7 +53,8 @@ rule trim:
 		"--max_length {params.max_length} "
                         "--output_dir data/2_trimmed/ "
 		"--quality {params.quality} "
-		"{input}"
+		"{input} 1>> output_logs/2_outlog.txt 2>> Error.txt"
+		
 
 
 # Filter out junk RNA
@@ -49,7 +66,7 @@ rule filter_rfam:
 	threads:
 		config["filter_rfam"]["threads"]
 	params:
-		rfam_genome = config["genomes"]["junk_mrna"],
+		rfam_genome = config["genomes"]["junk_rna"],
 		path = config["paths"]["bowtie"]
 	shell:
 			"{params.path} "
@@ -62,7 +79,7 @@ rule filter_rfam:
 			"--threads {threads} "
 			"--un {output} "
 			"{params.rfam_genome} "
-			"{input}"	
+			"{input} 1>> output_logs/3_outlog.txt 2>> Error.txt"	
 
 
 # Filter out chloroplast and mitochondrial RNA
@@ -86,7 +103,7 @@ rule filter_c_m:
 		"--threads {threads} "
 		"--un {output} "
 		"{params.c_m_genome} "
-		"{input}"
+		"{input} 1>> output_logs/4_outlog.txt 2>> Error.txt"
 
 
 # Cluster and align reads
@@ -94,16 +111,13 @@ rule cluster:
 	input:
 		expand("data/4_c_m_filtered/{sample}_c_m_filtered.fq", sample=SAMPLES)
 	output:
-		directory("data/5_clustered/")
+		"data/5_clustered/merged.bam"
 	params:
 		bowtie_cores = config["cluster"]["bowtie_cores"],
 		genome = config["genomes"]["reference_genome"],
 		path = config["paths"]["ShortStack"]
 	shell:
-		"rm -r data/5_clustered && " # Need this line because Snakemake
-				     # creates this dir, but ShortStack
-				     # won't add files to a dir that already
-				     # exists
+		"rm -r data/5_clustered && " 
 		"{params.path} "
 		"--sort_mem 20G "
 		"--mismatches 0 "
@@ -112,38 +126,30 @@ rule cluster:
 		"--nohp "
 		"--readfile {input} "
 		"--genomefile {params.genome} "
-		"--outdir data/5_clustered/"
-
+		"--outdir data/5_clustered/ 1>> output_logs/5_outlog.txt 2>> Error.txt && "
+		"mv data/5_clustered/*.bam data/5_clustered/merged.bam "
 
 # Split merged alignments file into multiple BAM files by sample name
 rule split_by_sample:
 	input:
-		directory("data/5_clustered/")
+		"data/5_clustered/merged.bam"
 	output:
-		expand("{sample}_c_m_filtered.bam",sample=SAMPLES)
+		expand("data/6_split_by_sample/{sample}_c_m_filtered.bam",sample=SAMPLES)
 	params:
 		path = config["paths"]["samtools"]
 	shell:
+		"mkdir -p data/6_split_by_sample && "
 		"{params.path} " 
 		"split "
   		"-f '%!.bam' "
-		"{input}*.bam"
-
-
-# Move BAM files to destination folder
-rule move:
-	input:
-		"{sample}_c_m_filtered.bam"
-	output:
-		"data/6_split_by_sample/{sample}_aligned.bam"
-	shell:
-		"mv {input} {output}"
+		"{input} 1>> output_logs/6_outlog.txt 2>> Error.txt && "
+		"mv *c_m_filtered.bam data/6_split_by_sample/ "
 
 
 # Extract mapped reads into BAM files
 rule convert_1:
 	input:
-		"data/6_split_by_sample/{sample}_aligned.bam"
+		"data/6_split_by_sample/{sample}_c_m_filtered.bam"
 	output:
 		"data/7_converted/int1/{sample}_int1.bam"
 	threads:
@@ -156,7 +162,7 @@ rule convert_1:
 		"-F4 "
 		"-b "
 		"-@ {threads} "
-		"{input} > {output}"
+		"{input} > {output} 2>> Error.txt"
 
 
 # Convert BAM files to Fastq files
@@ -170,7 +176,7 @@ rule convert_2:
 	shell:
 		"{params.path} "
 		"bam2fq "
-		"-t {input} > {output}"
+		"-t {input} > {output} 2>> Error.txt"
 
 
 # Get encoding quality for Fastq files
@@ -181,3 +187,16 @@ rule retrieve_encoding_quality:
 		"data/8_fastqs/{sample}.fastq"
 	script:
 		"scripts/match_qual_v2.py"
+
+# Print length profiles of each sample to a log file
+rule log_lengths:
+	input:
+		"data/8_fastqs/{sample}.fastq"
+	output:
+		"data/9_fastqc_reports/{sample}_fastqc.zip"
+	threads:
+		1
+	shell:
+		"fastqc -o data/9_fastqc_reports -t 1 {input} " 
+		"1>> output_logs/9_outlog.txt 2>> Error.txt && "
+		"scripts/fastq_readlength_profile.py {input} >> Counts_Log.txt"
