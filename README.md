@@ -45,10 +45,10 @@ Snakemake documentation for installation can be found [here](https://snakemake.r
 │       |---|---|---genome fasta + index files    
 │       |---|---ro18_v2_fixed_ids_shortstack-index/    
 │       |---|---|---genome fasta + index files    
-│-scripts/    
-│      |---match_qual_v2.py
-│      |---fastq_readlength_profile.py
-│-output_logs/
+│-scripts/        
+│      |---match_qual_v2.py     
+│      |---fastq_readlength_profile.py      
+│-output_logs/      
 │-Snakefile     
 │-config.yaml    
 
