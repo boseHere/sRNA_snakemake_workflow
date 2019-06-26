@@ -14,23 +14,6 @@ SAMPLES = config["samples"]
 rule all:
 	input:
 		expand("data/9_fastqc_reports/{sample}_fastqc.zip",sample=SAMPLES)
-
-		
-#rule index_genomes:
-#	input: 
-#		config["genomes"]
-#	output:
-#		"data/genomes/*/*.ebwt "
-#	params:
-#		need_to_index = config["indexing_genomes_options"]["index_genomes"]
-#	priority: 1
-#	shell:
-#		"if [{params.need_to_index} == 'y']; then "
-#		"for file in {input} "
-#		"do "
-#		"bowtie-build $file ${file::-6} "
-#		"done "
-#		"fi "
 		
 
 # Trim reads

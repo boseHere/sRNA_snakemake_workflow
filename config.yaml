@@ -2,10 +2,6 @@ samples:
 
     - 
       
-indexing_genomes_options:
-
-    index_genomes : y # (y/n)
-
 
 genomes:
     junk_rna : ./data/genomes/rfam_athaliana/rfam_14_nomirna_a_thaliana
