@@ -1,10 +1,11 @@
 samples:
 
-    - 
-      
+    - TK1_10_S10_L001_R1_001      
+    - TK1_11_S11_L001_R1_001         
+  
 
 genomes:
-    junk_rna : ./data/genomes/rfam_athaliana/rfam_14_nomirna_a_thaliana
+    filter_rna : ./data/genomes/filter_rna/arabidopsis_brassica_rfam
     chloro_mitochondria : ./data/genomes/chloroplast_mitocondrion_bowtie-index/TAIR10_chrCM
     reference_genome : ./data/genomes/ro18_v2_fixed_ids_shortstack-index/ro18_v2_standard_output.final.scaffolds.fixed_ids.fasta
 
@@ -17,8 +18,8 @@ paths:
 
 
 trim:
-    min_length : 19
-    max_length : 26
+    min_length : 21
+    max_length : 24
     adapter_seq : 
     quality : 30
 

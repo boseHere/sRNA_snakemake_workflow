@@ -14,7 +14,11 @@ SAMPLES = config["samples"]
 rule all:
 	input:
 		expand("data/9_fastqc_reports/{sample}_fastqc.zip",sample=SAMPLES)
-		
+
+# Index reference genomes
+onstart:
+	shell("bowtie-build -f data/genomes/*/*.fasta")
+
 
 # Trim reads
 rule trim:
@@ -49,7 +53,7 @@ rule filter_rfam:
 	threads:
 		config["filter_rfam"]["threads"]
 	params:
-		rfam_genome = config["genomes"]["junk_rna"],
+		rfam_genome = config["genomes"]["filter_rna"],
 		path = config["paths"]["bowtie"]
 	shell:
 			"{params.path} "
@@ -62,7 +66,8 @@ rule filter_rfam:
 			"--threads {threads} "
 			"--un {output} "
 			"{params.rfam_genome} "
-			"{input} 1>> output_logs/3_outlog.txt 2>> Error.txt"	
+			"{input} 1>> output_logs/3_outlog.txt 2>> Error.txt "
+				
 
 
 # Filter out chloroplast and mitochondrial RNA
@@ -87,7 +92,7 @@ rule filter_c_m:
 		"--un {output} "
 		"{params.c_m_genome} "
 		"{input} 1>> output_logs/4_outlog.txt 2>> Error.txt"
-
+	
 
 # Cluster and align reads
 rule cluster:
@@ -126,7 +131,7 @@ rule split_by_sample:
 		"split "
   		"-f '%!.bam' "
 		"{input} 1>> output_logs/6_outlog.txt 2>> Error.txt && "
-		"mv *c_m_filtered.bam data/6_split_by_sample/ "
+		"mv *.bam data/6_split_by_sample/ "
 
 
 # Extract mapped reads into BAM files
@@ -139,6 +144,7 @@ rule convert_1:
 		config["convert_1"]["threads"]
 	params:
 		path = config["paths"]["samtools"]
+	shadow: "full"
 	shell:
 		"{params.path} "
 		"view "
@@ -156,6 +162,7 @@ rule convert_2:
 		"data/7_converted/{sample}_converted.fq"
 	params:
 		path = config["paths"]["samtools"]
+	shadow: "full"
 	shell:
 		"{params.path} "
 		"bam2fq "
@@ -183,3 +190,8 @@ rule log_lengths:
 		"fastqc -o data/9_fastqc_reports -t 1 {input} " 
 		"1>> output_logs/9_outlog.txt 2>> Error.txt && "
 		"scripts/fastq_readlength_profile.py {input} >> Counts_Log.txt"
+
+onsuccess:
+	shell("rm -r data/7_converted")
+	shell("gzip data/3_rfam_filtered/*.fq")
+	shell("gzip data/4_c_m_filtered/*.fq")
