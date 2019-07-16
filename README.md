@@ -1,4 +1,4 @@
-# sRNA_snakemake_workflow
+# sRNA Snakemake Workflow
 
 Trims, filters, clusters, and aligns small RNA samples
 
