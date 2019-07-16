@@ -3,10 +3,9 @@ samples:
    
 
 genomes:
-    filter_rna : ./data/genomes/filter_rna/arabidopsis_brassica_rfam
-    chloro_mitochondria : ./data/genomes/chloroplast_mitocondrion/TAIR10_chrCM
-    reference_genome : ./data/genomes/reference_genome/ro18_v2_standard_output.final.scaffolds.fixed_ids.fasta
-
+    filter_rna : ./data/genomes/filter_rna/file_name_here
+    chloro_mitochondria : ./data/genomes/chloroplast_mitocondrion/file_name_here
+    reference_genome : ./data/genomes/reference_genome/file_name_here
 
 paths:
     trim_galore : trim_galore
