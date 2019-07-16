@@ -100,15 +100,14 @@ Give absolute paths to the trim_galore, bowtie, ShortStack, and samtools softwar
 #### Filter_rfam
 
 * ##### threads    
-   Defaulted to 1, can be changed according to server capabilities
+   Defaulted to 1, can be changed according to server capacity
     
 #### Filter_c_m
 
 * ##### threads    
-   Defaulted to 1, can be changed according to server capabilities
-
+   Defaulted to 1, can be changed according to server capacity
 #### Cluster
 
 * ##### bowtie_cores    
-   Defaulted to 1, can be changed according to server capabilities
+   Defaulted to 1, can be changed according to server capacity
    
