@@ -13,11 +13,11 @@ SAMPLES = config["samples"]
 # Run workflow
 rule all:
 	input:
-		expand("data/9_fastqc_reports/{sample}_fastqc.zip",sample=SAMPLES)
+		expand("data/9_fastqc_reports/{sample}_fastqc.zip", sample=SAMPLES)
 
 # Index reference genomes
 onstart:
-	shell("bowtie-build -f data/genomes/*/*.fasta")
+	shell("scripts/index_genomes.sh")
 
 
 # Trim reads
@@ -38,7 +38,7 @@ rule trim:
 		"--gzip "
 		"--length {params.min_length} "
 		"--max_length {params.max_length} "
-                        "--output_dir data/2_trimmed/ "
+                "--output_dir data/2_trimmed/ "
 		"--quality {params.quality} "
 		"{input} 1>> output_logs/2_outlog.txt 2>> Error.txt"
 		
@@ -162,7 +162,6 @@ rule convert_2:
 		"data/7_converted/{sample}_converted.fq"
 	params:
 		path = config["paths"]["samtools"]
-	shadow: "full"
 	shell:
 		"{params.path} "
 		"bam2fq "

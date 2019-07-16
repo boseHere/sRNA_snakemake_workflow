@@ -5,12 +5,14 @@ do
 
 	if [ $num_files -lt 6 ]
 		then
-		new_file=$file*.fasta
-		substring=$(basename $file)
-		subdir=${file%"$substring"}
 
-		bowtie-build -f $new_file ${substring} &&
-		mv ./$substring*.ebwt $subdir
+		for f_file in $file*.fasta
+		do
+			substring=$(basename $file) 
+			subdir=${file%"$substring"} 
+			bowtie-build -f $f_file ${f_file:24:-6} &&
+			mv ./${f_file:24:-6}*.ebwt $subdir
+		done
 	fi
 
 done
