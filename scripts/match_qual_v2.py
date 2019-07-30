@@ -3,7 +3,6 @@ i = 0
 with open(snakemake.input[0], 'r') as the_file:
     samples = {}
     for line in the_file:
-        #line = line.decode("utf-8")
         line = line.strip()
 
         if i == 0:
@@ -20,7 +19,6 @@ with open(snakemake.input[0], 'r') as the_file:
                 for in_line in qual_file:
 
                     in_line = in_line.strip()
-                    #in_line = in_line.decode("utf-8")
                     if j == 0:
                         in_parts = in_line.split()
                         seq_id_in = in_parts[0]
