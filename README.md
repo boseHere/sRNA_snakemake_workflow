@@ -4,6 +4,7 @@ Trims, filters, clusters, and aligns small RNA samples
 
 Table of Contents
 =================
+
 * [Installing Snakemake](#install)
 * [Dependencies](#dependencies)    
 * [File Setup](#file-setup)    
