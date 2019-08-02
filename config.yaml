@@ -1,5 +1,11 @@
 samples:
-        
+     - Sample_TK5-14
+
+threads: 
+    filter_rna_bowtie : 1
+    filter_c_m_bowtie : 1
+    shortstack_cluster : 1
+    mapped_reads_samtools : 1
 
 genomes:
     filter_rna : ./genomes/filter_rna/arabidopsis_brassica_rfam
@@ -15,23 +21,7 @@ paths:
 
 
 trim:
-    min_length : 
-    max_length : 
-    adapter_seq : 
-    quality : 
-
-
-filter_rfam:
-    threads : 1
-    
-
-filter_c_m:
-    threads : 1
-
-
-cluster:
-    bowtie_cores : 1
-
-
-convert_1:
-    threads : 1
+    min_length : 19
+    max_length : 26
+    adapter_seq : --illumina
+    quality : 30

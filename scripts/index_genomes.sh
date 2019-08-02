@@ -1,5 +1,5 @@
 #!/bin/bash
-for file in data/genomes/*/
+for file in genomes/*/
 do
 	num_files=`ls -l $file | grep ".ebwt$" | wc -l`
 
@@ -10,8 +10,9 @@ do
 		do
 			substring=$(basename $file) 
 			subdir=${file%"$substring"} 
-			bowtie-build -f $f_file ${f_file:24:-6} &&
-			mv ./${f_file:24:-6}*.ebwt $subdir
+			build_name=$(basename $f_file)
+			bowtie-build -f $f_file ${build_name:0:${#build_name} - 6} &&
+			mv ./${build_name:0:${#build_name} - 6}*.ebwt $subdir
 		done
 	fi
 

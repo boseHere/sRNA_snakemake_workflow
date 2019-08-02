@@ -49,7 +49,7 @@ rule filter_rfam:
 	output:
 		"data/3_rfam_filtered/{sample}_rfam_filtered.fq"
 	threads:
-		config["filter_rfam"]["threads"]
+		config["threads"]["filter_rna_bowtie"]
 	params:
 		rna_genome = config["genomes"]["filter_rna"],
 		path = config["paths"]["bowtie"]
@@ -75,7 +75,7 @@ rule filter_c_m:
 	output:
 		"data/4_c_m_filtered/{sample}_c_m_filtered.fq"
 	threads:
-		config["filter_c_m"]["threads"]
+		config["threads"]["filter_c_m_bowtie"]
 	params:
 		c_m_genome = config["genomes"]["chloro_mitochondria"],
 		path = config["paths"]["bowtie"]
@@ -98,8 +98,9 @@ rule cluster:
 		expand("data/4_c_m_filtered/{sample}_c_m_filtered.fq", sample=SAMPLES)
 	output:
 		"data/5_clustered/merged.bam"
+	threads:
+		config["threads"]["shortstack_cluster"]
 	params:
-		bowtie_cores = config["cluster"]["bowtie_cores"],
 		genome = config["genomes"]["reference_genome"],
 		path = config["paths"]["ShortStack"]
 	shell:
@@ -108,7 +109,7 @@ rule cluster:
 		"--sort_mem 20G "
 		"--mismatches 0 "
 		"--mmap u "
-		"--bowtie_cores {params.bowtie_cores} "
+		"--bowtie_cores {threads} "
 		"--nohp "
 		"--readfile {input} "
 		"--genomefile {params.genome} "
@@ -139,7 +140,7 @@ rule convert_1:
 	output:
 		"data/7_converted/int1/{sample}_int1.bam"
 	threads:
-		config["convert_1"]["threads"]
+		config["threads"]["mapped_reads_samtools"]
 	params:
 		path = config["paths"]["samtools"]
 	shell:
