@@ -1,11 +1,11 @@
 samples:
-
-   
+        
 
 genomes:
-    filter_rna : ./data/genomes/filter_rna/file_name_here
-    chloro_mitochondria : ./data/genomes/chloroplast_mitocondrion/file_name_here
-    reference_genome : ./data/genomes/reference_genome/file_name_here
+    filter_rna : ./genomes/filter_rna/arabidopsis_brassica_rfam
+    chloro_mitochondria : ./genomes/chloroplast_mitocondrion/TAIR10_chrCM
+    reference_genome : ./genomes/reference_genome/ro18_v2_standard_output.final.scaffolds.fixed_ids.fasta
+
 
 paths:
     trim_galore : trim_galore
@@ -15,10 +15,10 @@ paths:
 
 
 trim:
-    min_length : 23
-    max_length : 23
+    min_length : 
+    max_length : 
     adapter_seq : 
-    quality : 30
+    quality : 
 
 
 filter_rfam:

@@ -41,8 +41,6 @@ rule trim:
                 "--output_dir data/2_trimmed/ "
 		"--quality {params.quality} "
 		"{input} 1>> output_logs/2_outlog.txt 2>> Error.txt"
-		
-
 
 # Filter out junk RNA
 rule filter_rfam:
@@ -53,7 +51,7 @@ rule filter_rfam:
 	threads:
 		config["filter_rfam"]["threads"]
 	params:
-		rfam_genome = config["genomes"]["filter_rna"],
+		rna_genome = config["genomes"]["filter_rna"],
 		path = config["paths"]["bowtie"]
 	shell:
 			"{params.path} "
@@ -65,7 +63,7 @@ rule filter_rfam:
 			"--norc "
 			"--threads {threads} "
 			"--un {output} "
-			"{params.rfam_genome} "
+			"{params.rna_genome} "
 			"{input} 1>> output_logs/3_outlog.txt 2>> Error.txt "
 				
 
@@ -144,7 +142,6 @@ rule convert_1:
 		config["convert_1"]["threads"]
 	params:
 		path = config["paths"]["samtools"]
-	shadow: "full"
 	shell:
 		"{params.path} "
 		"view "
