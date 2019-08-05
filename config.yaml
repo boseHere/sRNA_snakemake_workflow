@@ -1,5 +1,4 @@
 samples:
-     - Sample_TK5-14
 
 threads: 
     filter_rna_bowtie : 1
@@ -8,9 +7,9 @@ threads:
     mapped_reads_samtools : 1
 
 genomes:
-    filter_rna : ./genomes/filter_rna/arabidopsis_brassica_rfam
-    chloro_mitochondria : ./genomes/chloroplast_mitocondrion/TAIR10_chrCM
-    reference_genome : ./genomes/reference_genome/ro18_v2_standard_output.final.scaffolds.fixed_ids.fasta
+    filter_rna : ./genomes/filter_rna/
+    chloro_mitochondria : ./genomes/chloroplast_mitocondrion/
+    reference_genome : ./genomes/reference_genome/
 
 
 paths:
