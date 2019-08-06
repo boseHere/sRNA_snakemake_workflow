@@ -16,7 +16,7 @@ Table of Contents
 * [Running Snakemake](#running-snakemake)
 
 
-### Dependencies 
+### __Dependencies__ 
  
 * Snakemake 
 * Trimgalore v.0.6.2    
@@ -35,7 +35,7 @@ pipeline will be as simple as installing singularity, downloading the .sif image
 $ singularity exec mosher_lab_srna.sif snakemake --cores 10
 ```
 
-### Directory Structure
+### __Directory Structure__
 
 Ensure you have the following directory structure in place before running snakemake from the top level directory.
 ```
@@ -59,7 +59,7 @@ Ensure you have the following directory structure in place before running snakem
 ```
 As snakemake runs, the data folder will become populated with folders numbered in the order they are created.
 
-### config\.yaml Requirements
+### __config\.yaml Requirements__
 
 #### Samples
 
@@ -125,7 +125,7 @@ This pipeline will not work on sequences that have already been adapter-trimmed.
     
 Set the minimum read quality cut-off. Default is 30. 
      
-### Running Snakemake
+### __Running Snakemake__
 
 To run the pipeline, execute the following on the command line from the top level of the [directory structure](#directory-structure):
 ```
