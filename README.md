@@ -18,19 +18,19 @@ Table of Contents
 
 ### __Dependencies__ 
  
-* Snakemake 
-* Trimgalore v.0.6.2    
-* cutadapt v.2.3    
-* fastqc v.0.11.7    
-* samtools v.1.9    
-* bowtie v.1.2.2    
-* ShortStack v.3.8.5    
-* RNAfold v.2.3.2    
+* Snakemake  5.4.5
+* Trimgalore 0.6.2    
+* cutadapt 2.3    
+* fastqc 0.11.7    
+* samtools 1.9    
+* bowtie 1.2.2    
+* ShortStack 3.8.5    
+* RNAfold 2.3.2    
 * XZ Utils 5.2.2    
 * liblzma 5.2.2   
 
 *Coming soon!* A singularity container with all dependent software to run this pipeline. Once the container is published, running this
-pipeline will be as simple as installing singularity, downloading the .sif image, and running:
+pipeline will be as simple as installing singularity, pulling the .sif image, and running:
 ```
 $ singularity exec mosher_lab_srna.sif snakemake --cores 10
 ```
