@@ -6,13 +6,14 @@ Table of Contents
 =================
 
 * [Dependencies](#dependencies)    
-* [Directory Structure](#directory-structure)    
-* [config\.yaml Requirements](#config-yaml-requirements)    
+* [Directory Structure](#directory-structure)     
+* [config\.yaml Requirements](#config.-yaml-requirements)     
   -[Samples](#samples)     
   -[Threads](#threads)     
   -[Genomes](#genomes)         
   -[Paths](#paths)     
   -[Trim](#trim)     
+* [Running Snakemake](#running-snakemake)
 
 
 ### Dependencies 
@@ -28,10 +29,15 @@ Table of Contents
 * XZ Utils 5.2.2    
 * liblzma 5.2.2   
 
+*Coming soon!* A singularity container with all dependent software to run this pipeline. Once the container is published, running this
+pipeline will be as simple as installing singularity, downloading the .sif image, and running:
+```
+$ singularity exec mosher_lab_srna.sif snakemake --cores 10
+```
 
 ### Directory Structure
 
-Ensure you have the following directory structure in place before running snakemake
+Ensure you have the following directory structure in place before running snakemake from the top level directory.
 ```
  .
 ├── _data 
@@ -66,9 +72,14 @@ samples:
        - sample_name2    
        - sample_name3    
 ```
-Sample names should be indented using 4 spaces (not the indent key), and be preceded by a dash character "-" and another space.
+Sample names should be indented using 4 spaces (not the indent key), and be preceded by a dash character "-" and another space.    
+    
+#### Threads
 
-
+Set the number of threads for each program to run with. The advised default is 10 for all programs, but this number can be scaled down
+given server limitations. It is advised not to go above 10 threads for each program, as this decreases the number of processes snakemake
+can run in parallel. 
+    
 #### Genomes
 
 Fill in the three absolute paths with the names of your genome files.     
@@ -98,24 +109,30 @@ $ which bowtie
 $ which ShortStack
 $ which Samtools
 ```
-If these lines return a path, leave this section as it is upon downloading. 
+If these lines return a path, leave this section as is upon downloading. 
 
 
 #### Trim
 
+Set the minimum and maximum read length you are interested in. The advised defaults for sRNA are a minimum length of 19 and a maximum 
+length of 26. 
+Set the adaptor sequence used when creating the sRNA seq libraries. Some commonly used adapters:    
+  * Illumina Adapter: AGATCGGAAGAGC    
+  * Illumina sRNA Adapter: TGGAATTCTCGG    
+  * Nextera Adapter: CTGTCTCTTATA    
+    
+This pipeline will not work on sequences that have already been adapter-trimmed.     
+    
+Set the minimum read quality cut-off. Default is 30. 
+     
+### Running Snakemake
 
-* ##### min_length
-
-   Defaulted to 19. Reads shorter than this int will be discarded.
-
-* ##### max_length
-
-   Defaulted to 26. Read longer than this int will be discarded.
-
-* ##### adapter_seq
-
-   Defaulted to Illumina adapter sequence. Specifies the adapter sequence. If left blank, workflow will attempt to auto-detect the adapter sequence and proceed to trim it via trimgalore
-
-* ##### quality
-
-   Defaulted to 30. Reads with quality lower than this score will be discarded
+To run the pipeline, execute the following on the command line from the top level of the [directory structure](#directory-structure):
+```
+$ snakemake --cores # INSERT MAX NUMBER OF CORES HERE
+```
+If a previous snakemake process was interrupted, you may need to run the following to unlock the directory before running the snakemake
+the pipeline again:
+```
+$ snakemake --unlock
+```
