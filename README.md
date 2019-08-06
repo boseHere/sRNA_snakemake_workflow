@@ -1,28 +1,23 @@
 # sRNA Snakemake Workflow
 
-Trims, filters, clusters, and aligns small RNA samples
+Runs an sRNA-seq data cleaning pipeline on a collection of fastq.gz files
 
 Table of Contents
 =================
 
-* [Installing Snakemake](#installing-snakemake)
 * [Dependencies](#dependencies)    
-* [File Setup](#file-setup)    
+* [Directory Structure](#directory-structure)    
 * [config\.yaml Requirements](#config-yaml-requirements)    
-  -[Samples](#samples)    
-  -[Genomes](#genomes)    
-  -[Trim](#trim)    
-  -[Filter_rfam](#filter_rfam)    
-  -[Filter_c_m](#filter_c_m)    
-  -[Cluster](#cluster)    
+  -[Samples](#samples)     
+  -[Threads](#threads)     
+  -[Genomes](#genomes)         
+  -[Paths](#paths)     
+  -[Trim](#trim)     
 
 
-### Installing Snakemake 
-
-Snakemake documentation for installation can be found [here](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html)    
-
-### Dependencies
-
+### Dependencies 
+ 
+* Snakemake 
 * Trimgalore v.0.6.2    
 * cutadapt v.2.3    
 * fastqc v.0.11.7    
@@ -30,52 +25,81 @@ Snakemake documentation for installation can be found [here](https://snakemake.r
 * bowtie v.1.2.2    
 * ShortStack v.3.8.5    
 * RNAfold v.2.3.2    
-* XZ Utils 4.999.9 beta    
-* liblzma 4.999.9 beta    
+* XZ Utils 5.2.2    
+* liblzma 5.2.2   
 
 
-### File Setup
+### Directory Structure
 
-|-data/    
-│       |---1_raw/    
-│       |---|---samples.fastq.gz    
-│       |---genomes/    
-│       |---|--chloroplast_mitocondrion_bowtie-index/    
-│       |---|---|---genome fasta + index files    
-│       |---|--rfam_athaliana/    
-│       |---|---|---genome fasta + index files    
-│       |---|---ro18_v2_fixed_ids_shortstack-index/    
-│       |---|---|---genome fasta + index files    
-│-scripts/        
-│      |---match_qual_v2.py     
-│      |---fastq_readlength_profile.py      
-│-output_logs/      
-│-Snakefile     
-│-config.yaml    
-
+Ensure you have the following directory structure in place before running snakemake
+```
+ .
+├── _data 
+│   └── 1_raw
+│       └── # YOUR FASTQ.GZ FILES CONTAINING SRNA-SEQ DATA HERE
+├── _genomes 
+│   └── _chloroplast_mitocondrion
+│       └── # FASTA FILE CONTAINING THE ASSEMBLED CHLOROPLAST + MITOCHODRIAL GENOME FOR YOUR ORGANISM HERE
+│   └── _filter_rna
+│       └── # FASTA FILE CONTAINING THE ASSEMBLED NON-SRNA RNA GENOME FOR YOUR ORGANISM HERE
+│   └── _refenrece_genome
+│       └── # FASTA FILE CONTAINING THE ASSEMBLED GENOME FOR YOUR ORGANISM HERE
+├── _output_logs 
+├── _scripts 
+│   └── index_genomes.sh
+│   └── match_qual_v2.py
+├── config.yaml
+└── Snakefile
+```
+As snakemake runs, the data folder will become populated with folders numbered in the order they are created.
 
 ### config\.yaml Requirements
 
 #### Samples
 
-Give names of samples without file extensions (should be in fastq.gz). 
+Give names of samples *without* file extensions.
 
 *Example*
-
+```
 samples:    
-       - sample1    
-       - sample2    
-       - sample3    
-    
-* Note: Don't use tab to do the indent (yaml doesn't like it). Use 4 spaces instead.
+       - sample_name1    
+       - sample_name2    
+       - sample_name3    
+```
+Sample names should be indented using 4 spaces (not the indent key), and be preceded by a dash character "-" and another space.
 
 
 #### Genomes
 
+Fill in the three absolute paths with the names of your genome files.     
+
+The first two paths (for filter_rna & chloro_mitochondria)
+require the BUILD NAME of the genome file. This is simply the name of the genome files without the .fasta extensions.     
+
+The third path (for the reference_genome), requires the FILENAME of the genome file. This is the name of the genome file INCLUDING its
+.fasta extension.
+
+*Example*
+```
+genomes:
+    filter_rna : ./genomes/filter_rna/my_rna_genome
+    chloro_mitochondria : ./genomes/chloroplast_mitocondrion/my_cm_genome
+    reference_genome : ./genomes/reference_genome/my_ref_genome.fasta
+```
+
 
 #### Paths
 
-Give absolute paths to the trim_galore, bowtie, ShortStack, and samtools software. These can be obtaned via "$ which trim_galore"
+Give absolute paths to the trim_galore, bowtie, ShortStack, and samtools software if they are not already sym-linked to a 
+location in /usr/local/bin/. To test if these software are sym-linked, you can run the following on the command line.
+```
+$ which trim_galore
+$ which bowtie
+$ which ShortStack
+$ which Samtools
+```
+If these lines return a path, leave this section as it is upon downloading. 
+
 
 #### Trim
 
@@ -95,20 +119,3 @@ Give absolute paths to the trim_galore, bowtie, ShortStack, and samtools softwar
 * ##### quality
 
    Defaulted to 30. Reads with quality lower than this score will be discarded
-
-
-
-#### Filter_rfam
-
-* ##### threads    
-   Defaulted to 1, can be changed according to server capacity
-    
-#### Filter_c_m
-
-* ##### threads    
-   Defaulted to 1, can be changed according to server capacity
-#### Cluster
-
-* ##### bowtie_cores    
-   Defaulted to 1, can be changed according to server capacity
-   
