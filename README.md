@@ -7,7 +7,7 @@ Table of Contents
 
 * [Dependencies](#dependencies)    
 * [Directory Structure](#directory-structure)     
-* [Configuring config\.yaml](#config.-yaml-requirements)     
+* [Configuring config\.yaml](#configuring-config.-yaml)     
   -[Samples](#samples)     
   -[Threads](#threads)     
   -[Genomes](#genomes)         
