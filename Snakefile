@@ -35,11 +35,11 @@ for ext in "fastq fq fastq.gz fq.gz".split():
 			path = config["paths"]["trim_galore"]
 		shell:	
 			"{params.path} "
-			#"--adapter {params.adapter_seq} "
+			"--adapter {params.adapter_seq} "
 			"--gzip "
 			"--length {params.min_length} "
 			"--max_length {params.max_length} "
-	                "--output_dir data/2_trimmed/ "
+	                	"--output_dir data/2_trimmed/ "
 			"--quality {params.quality} "
 			"{input} 1>> output_logs/2_outlog.txt 2>> Error.txt"
 
@@ -191,5 +191,7 @@ rule log_lengths:
 
 onsuccess:
 	shell("rm -r data/7_converted")
+	shell("mv data/9_fastqc_reports/ data/8_fastqc_reports/")
+	shell("mv data/8_fastqs/ data/7_fastqs")
 	shell("gzip data/3_rfam_filtered/*.fq")
 	shell("gzip data/4_c_m_filtered/*.fq")
