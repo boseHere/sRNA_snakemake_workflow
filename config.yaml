@@ -17,10 +17,8 @@ paths:
     samtools : samtools
  
 samples: 
-    - TK2_20_S44_L002_R1_001
-    - TK4_9_S8_R1_001-f
- 
+
 genomes: 
-    chloro_mitochondria : ./genomes/chloro_mitocondrion/TAIR10_chrCM
-    filter_rna : ./genomes/filter_rna/arabidopsis_brassica_rfam
-    reference_genome : ./genomes/reference_genome/ro18_v2_standard_output.final.scaffolds.fixed_ids.fasta
+    chloro_mitochondria : ./genomes/chloro_mitocondrion/
+    filter_rna : ./genomes/filter_rna/
+    reference_genome : ./genomes/reference_genome/
