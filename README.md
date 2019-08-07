@@ -13,7 +13,7 @@ Table of Contents
   -[Threads](#threads)     
   -[Genomes](#genomes)         
   -[Paths](#paths)     
-  -[Trim](#trim)    
+  -[Trimming](#trimming)    
 * [Running Snakemake](#running-snakemake)
 
 
@@ -83,7 +83,7 @@ before running
 ```
 $ nano config.yaml
 ```
-to proceed with filling in the [Trimming], [Threads], and [Paths] sections of the config file. 
+to proceed with filling in the [Trimming](#trimming), [Threads](#threads), and [Paths](#paths) sections of the config file. 
     
 #### Trimming
 
