@@ -7,8 +7,8 @@ Table of Contents
 
 * [Dependencies](#dependencies)    
 * [Directory Structure](#directory-structure)     
-* [Configuring config.yaml](#configuring-config.yaml)
-  -[Automatically Fill In Config](#automatically-fill-in-config)
+* [Configuring config.yaml](#configuring-config.yaml)     
+  -[Automatically Fill In Config](#automatically-fill-in-config)     
   -[Samples](#samples)     
   -[Threads](#threads)     
   -[Genomes](#genomes)         
