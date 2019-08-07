@@ -21,26 +21,27 @@ onstart:
 
 
 # Trim reads
-rule trim:
-	input:
-		"data/1_raw/{sample}.fastq.gz"
-	output:
-		"data/2_trimmed/{sample}_trimmed.fq.gz"
-	params:
-		min_length = config["trim"]["min_length"],
-		max_length = config["trim"]["max_length"],
-		adapter_seq = config["trim"]["adapter_seq"],
-		quality = config["trim"]["quality"],
-		path = config["paths"]["trim_galore"]
-	shell:
-		"{params.path} "
-		#"--adapter {params.adapter_seq} "
-		"--gzip "
-		"--length {params.min_length} "
-		"--max_length {params.max_length} "
-                "--output_dir data/2_trimmed/ "
-		"--quality {params.quality} "
-		"{input} 1>> output_logs/2_outlog.txt 2>> Error.txt"
+for ext in "fastq fq fastq.gz fq.gz".split():
+	rule:
+		input:
+			expand("data/1_raw/{{sample}}.{ext}", ext=ext)
+		output:
+			"data/2_trimmed/{sample}_trimmed.fq.gz"
+		params:
+			min_length = config["trimming"]["min_length"],
+			max_length = config["trimming"]["max_length"],
+			adapter_seq = config["trimming"]["adapter_seq"],
+			quality = config["trimming"]["quality"],
+			path = config["paths"]["trim_galore"]
+		shell:	
+			"{params.path} "
+			#"--adapter {params.adapter_seq} "
+			"--gzip "
+			"--length {params.min_length} "
+			"--max_length {params.max_length} "
+	                "--output_dir data/2_trimmed/ "
+			"--quality {params.quality} "
+			"{input} 1>> output_logs/2_outlog.txt 2>> Error.txt"
 
 # Filter out junk RNA
 rule filter_rfam:
