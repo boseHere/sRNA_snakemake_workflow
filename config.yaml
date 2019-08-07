@@ -1,24 +1,30 @@
-trimming: 
-    min_length : 19
-    max_length : 26
-    adapter_seq : TGGAATTCTCGG
-    quality : 30
- 
+samples:
+
 threads: 
-    filter_rna_bowtie : 10 
-    filter_c_m_bowtie : 10 
-    shortstack_cluster : 10 
-    mapped_reads_samtools : 10 
- 
-paths: 
+    filter_rna_bowtie : 10
+    filter_c_m_bowtie : 10
+    shortstack_cluster : 10
+    mapped_reads_samtools : 10
+
+
+genomes:
+    filter_rna : ./genomes/filter_rna/# GENOME BUILD NAME (FASTA FILENAME 
+                                      # WITHOUT .FASTA EXTENDION)
+    chloro_mitochondria : ./genomes/chloro_mitocondrion/# GENOME BUILD 
+                                                  # NAME (FASTA FILENAME
+                                                  # WITHOUT .FASTA EXTENDION)
+    reference_genome : ./genomes/reference_genome/# GENOME .FASTA FILE
+				# INCLUDING .FASTA EXTENSION)
+
+paths:
     trim_galore : trim_galore
     bowtie : bowtie
     ShortStack : ShortStack
     samtools : samtools
- 
-samples: 
 
-genomes: 
-    chloro_mitochondria : ./genomes/chloro_mitocondrion/
-    filter_rna : ./genomes/filter_rna/
-    reference_genome : ./genomes/reference_genome/
+
+trim:
+    min_length : 19
+    max_length : 26
+    adapter_seq : TGGAATTCTCGG
+    quality : 30
