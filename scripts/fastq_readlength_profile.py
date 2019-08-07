@@ -15,7 +15,7 @@ def magic_open(input_file):
         return open(input_file, 'r')
 
 
-def fastq_length_profile(input_fastq):
+def fastq_length_profile(input_fastq, gzipped):
     fastq_lengths_dict = {}
     if gzipped:
         with magic_open(input_fastq) as input_handle:
@@ -47,6 +47,9 @@ def get_args():
     parser.add_argument('fastq',
                         help='Input .fastq(.gz)',
                         metavar='FILE')
+    parser.add_argument('--gzip',
+                         help='Gzip the output file',
+                         action='store_true')
     return parser.parse_args()
 
 
