@@ -1,9 +1,14 @@
+# Author: Maya Bose
+# Purpose: Given a fastq file with degraded quality encoding,
+# retrieves quality encoding for each read in the file by 
+# sequence id from a former file containing that
+# sequence with intact quality encoding.
+
 import gzip
 i = 0
 with open(snakemake.input[0], 'r') as the_file:
     samples = {}
     for line in the_file:
-        #line = line.decode("utf-8")
         line = line.strip()
 
         if i == 0:
