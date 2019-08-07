@@ -60,7 +60,7 @@ Ensure you have the following directory structure in place before running snakem
 ```
 As snakemake runs, the data folder will become populated with folders numbered in the order they are created.
 
-### Configuring config.yaml
+### Editing
 
 Editing the config.yaml file for this pipeline allows you to specify your files, reference genomes, software pathways, and trimming 
 parameters. To edit the config file, run
