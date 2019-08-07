@@ -7,7 +7,7 @@ Table of Contents
 
 * [Dependencies](#dependencies)    
 * [Directory Structure](#directory-structure)     
-* [Configuring config.yaml](#configuring-config.yaml)     
+* [Editing Config](#editing-config)     
   -[Automatically Fill In Config](#automatically-fill-in-config)     
   -[Samples](#samples)     
   -[Threads](#threads)     
@@ -60,7 +60,7 @@ Ensure you have the following directory structure in place before running snakem
 ```
 As snakemake runs, the data folder will become populated with folders numbered in the order they are created.
 
-### Editing
+### Editing Config
 
 Editing the config.yaml file for this pipeline allows you to specify your files, reference genomes, software pathways, and trimming 
 parameters. To edit the config file, run
@@ -151,7 +151,7 @@ genomes:
 
 The pipeline should be run only after you have populated your data/1_raw/ file with your sample files and placed the appropriate .fasta genome files into /genomes/chloro_mitocondrion/, genomes/filter_rna/, and genomes/reference_genome/. See [Directory Structure](#directory-structure) for a concise glance at what your directory structure should look like from the top level before running the pipeline.
 
-The pipeline also requires that the config.yaml file be filled out before running. See [Configuring config.yaml](#configuring-config.yaml) for more information on how to do that. The config.yaml file itself also contains comments to assist with filling it in.
+The pipeline also requires that the config.yaml file be filled out before running. See [Editing Config](#editing-config) for more information on how to do that. The config.yaml file itself also contains comments to assist with filling it in.
 
 To run the pipeline, execute the following on the command line from the top level of the directory structure:
 ```
