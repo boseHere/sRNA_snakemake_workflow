@@ -32,9 +32,9 @@ shopt -s nullglob
 for file in data/1_raw/*.{fastq,fastq.gz,fq.gz,fq}; do
 	name=$(basename $file)
 	sample=${name%%.*}
-	shopt -u nullglob
 	echo "    - "$sample >> config.yaml
 done
+shopt -u nullglob
 
 echo " " >> config.yaml
 
@@ -54,7 +54,7 @@ for file in genomes/*/*.fasta; do
 	fi
 
 done
-
+shopt -u nullglob
 
 
 
