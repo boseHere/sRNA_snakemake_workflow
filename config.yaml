@@ -26,13 +26,13 @@ samples:
 
 
 genomes:
-    filter_rna : ./genomes/filter_rna/# GENOME BUILD NAME (FASTA FILENAME 
-                                      # WITHOUT .FASTA EXTENDION)
-    chloro_mitochondria : ./genomes/chloro_mitocondrion/# GENOME BUILD 
-                                                  # NAME (FASTA FILENAME
-                                                  # WITHOUT .FASTA EXTENDION)
-    reference_genome : ./genomes/reference_genome/# GENOME .FASTA FILE
-				# INCLUDING .FASTA EXTENSION)
+    filter_rna : ./genomes/filter_rna/ # GENOME BUILD NAME (FASTA FILENAME 
+                                       # WITHOUT .FASTA EXTENDION)
+    chloro_mitochondria : ./genomes/chloro_mitocondrion/ # GENOME BUILD 
+                                                   # NAME (FASTA FILENAME
+                                                   # WITHOUT .FASTA EXTENDION)
+    reference_genome : ./genomes/reference_genome/ # GENOME .FASTA FILE
+				   # INCLUDING .FASTA EXTENSION)
 
 
 
