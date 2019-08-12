@@ -11,6 +11,12 @@ echo "    quality : 30" >> config.yaml
 
 echo " " >> config.yaml
 
+echo "aligning: " >> config.yaml
+echo "    multi_map_handler: u " >> config.yaml
+echo "    sort_memory : 20G " >> config.yaml
+
+echo " " >> config.yaml
+
 echo "threads: " >> config.yaml
 echo "    filter_rna_bowtie : 10 " >> config.yaml
 echo "    filter_c_m_bowtie : 10 " >> config.yaml

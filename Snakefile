@@ -103,13 +103,16 @@ rule cluster:
 		config["threads"]["shortstack_cluster"]
 	params:
 		genome = config["genomes"]["reference_genome"],
-		path = config["paths"]["ShortStack"]
+		path = config["paths"]["ShortStack"],
+		multi_map_handler = config["aligning"]["multi_map_handler"]
+		sort_memory = config["aligning"]["sort_memory"]
+		
 	shell:
 		"rm -r data/5_clustered && " 
 		"{params.path} "
-		"--sort_mem 20G "
+		"--sort_mem {params.sort_memory} "
 		"--mismatches 0 "
-		"--mmap u "
+		"--mmap {params.multi_map_handler} "
 		"--bowtie_cores {threads} "
 		"--nohp "
 		"--readfile {input} "

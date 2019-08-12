@@ -1,7 +1,4 @@
 #!/bin/bash
-Author: Maya Bose
-Purpose: Index .fasta genome files 
-
 for file in genomes/*/
 do
 	num_files=`ls -l $file | grep ".ebwt$" | wc -l`
