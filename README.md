@@ -9,11 +9,12 @@ Table of Contents
 * [Directory Structure](#directory-structure)     
 * [Editing Config](#editing-config)     
   -[Automatically Fill In Config](#automatically-fill-in-config)     
-  -[Samples](#samples)     
+  -[Trimming](#trimming)       
+  -[Aligning](#aligning)           
   -[Threads](#threads)     
+  -[Paths](#paths)              
+  -[Samples](#samples)     
   -[Genomes](#genomes)         
-  -[Paths](#paths)     
-  -[Trimming](#trimming)    
 * [Running Snakemake](#running-snakemake)
 
 
