@@ -32,7 +32,7 @@ genomes:
                                                    # NAME (FASTA FILENAME
                                                    # WITHOUT .FASTA EXTENDION)
     reference_genome : ./genomes/reference_genome/ # GENOME .FASTA FILE
-				   # INCLUDING .FASTA EXTENSION)
+    # INCLUDING .FASTA EXTENSION)
 
 
 
