@@ -41,7 +41,7 @@ for ext in "fastq fq fastq.gz fq.gz".split():
 			"--max_length {params.max_length} "
 	                	"--output_dir data/2_trimmed/ "
 			"--quality {params.quality} "
-			"{input} 1>> output_logs/2_outlog.txt 2>> Error.txt"
+			"{input} >> output_logs/2_outlog.txt"
 
 # Filter out junk RNA
 rule filter_rfam:
@@ -65,7 +65,7 @@ rule filter_rfam:
 			"--threads {threads} "
 			"--un {output} "
 			"{params.rna_genome} "
-			"{input} 1>> output_logs/3_outlog.txt 2>> Error.txt "
+			"{input} >> output_logs/3_outlog.txt"
 				
 
 
@@ -90,7 +90,7 @@ rule filter_c_m:
 		"--threads {threads} "
 		"--un {output} "
 		"{params.c_m_genome} "
-		"{input} 1>> output_logs/4_outlog.txt 2>> Error.txt"
+		"{input} >> output_logs/4_outlog.txt"
 	
 
 # Cluster and align reads
@@ -104,7 +104,7 @@ rule cluster:
 	params:
 		genome = config["genomes"]["reference_genome"],
 		path = config["paths"]["ShortStack"],
-		multi_map_handler = config["aligning"]["multi_map_handler"]
+		multi_map_handler = config["aligning"]["multi_map_handler"],
 		sort_memory = config["aligning"]["sort_memory"]
 		
 	shell:
@@ -116,8 +116,8 @@ rule cluster:
 		"--bowtie_cores {threads} "
 		"--nohp "
 		"--readfile {input} "
-		"--genomefile {params.genome} "
-		"--outdir data/5_clustered/ 1>> output_logs/5_outlog.txt 2>> Error.txt && "
+		"--genomefile {params.genome}.fasta "
+		"--outdir data/5_clustered/ output_logs/5_outlog.txt && "
 		"mv data/5_clustered/*.bam data/5_clustered/merged.bam "
 
 # Split merged alignments file into multiple BAM files by sample name
@@ -133,7 +133,7 @@ rule split_by_sample:
 		"{params.path} " 
 		"split "
   		"-f '%!.bam' "
-		"{input} 1>> output_logs/6_outlog.txt 2>> Error.txt && "
+		"{input} >> output_logs/6_outlog.txt && "
 		"mv *.bam data/6_split_by_sample/ "
 
 
@@ -153,7 +153,7 @@ rule convert_1:
 		"-F4 "
 		"-b "
 		"-@ {threads} "
-		"{input} > {output} 2>> Error.txt"
+		"{input} > {output} >> Error.txt"
 
 
 # Convert BAM files to Fastq files
@@ -189,7 +189,7 @@ rule log_lengths:
 		1
 	shell:
 		"fastqc -o data/9_fastqc_reports -t 1 {input} " 
-		"1>> output_logs/9_outlog.txt 2>> Error.txt && "
+		"1>> output_logs/7_outlog.txt 2>> Error.txt && "
 		"scripts/fastq_readlength_profile.py {input} >> Counts_Log.txt"
 
 onsuccess:
