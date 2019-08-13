@@ -6,21 +6,20 @@ Table of Contents
 =================
 
 * [Dependencies](#dependencies)    
-* [How to Run the Pipeline](#how-to-run-the-pipeline)
- - [Directory Structure](#directory-structure)     
- - [Editing Config](#editing-config)     
-  *[Automatically Fill In Config](#automatically-fill-in-config)     
-  *[Trimming](#trimming)       
-  *[Aligning](#aligning)           
-  *[Threads](#threads)     
-  *[Paths](#paths)              
-  *[Samples](#samples)     
-  *[Genomes](#genomes)         
+* [How to Run the Pipeline](#how-to-run-the-pipeline)       
+  - [Directory Structure](#directory-structure)     
+  - [Editing Config](#editing-config)     
+    * [Automatically Fill In Config](#automatically-fill-in-config)     
+    * [Trimming](#trimming)       
+    * [Aligning](#aligning)           
+    * [Threads](#threads)     
+    * [Paths](#paths)              
+    * [Samples](#samples)     
+    * [Genomes](#genomes)         
+* [About the Output Files](#about-the-output-files)      
 
-* [About the Output Files](#about-the-output-files)
 
-
-### __Dependencies__ 
+### Dependencies         
  
 * Snakemake  5.4.5
 * Trimgalore 0.6.2    
@@ -177,4 +176,6 @@ genomes:
     chloro_mitochondria : ./genomes/chloroplast_mitocondrion/my_cm_genome
     reference_genome : ./genomes/reference_genome/my_ref_genome.fasta
 ```
+
+### About the Output Files                   
         
