@@ -16,7 +16,8 @@ Table of Contents
     * [Paths](#paths)              
     * [Samples](#samples)     
     * [Genomes](#genomes)         
-* [About the Output Files](#about-the-output-files)      
+* [About the Output Files](#about-the-output-files)
+* [References](#references)
 
 
 ### Dependencies         
@@ -130,6 +131,9 @@ Set the minimum read quality cut-off. Default is 30.
     
 ##### Aligning       
 
+Fill in the desired protocol to handle multi-mapping reads during the alignment process. The options for this, as described by the [ShortStack documentation](https://github.com/MikeAxtell/ShortStack) include n (none), r (random), u (unique- seeded guide), or f (fractional-seeded guide). The suggested default is u. 
+
+Also fill in the desired amount of memory to be allocated for sorting bam files. The default for this is 20G, though you may want to increase this if you find the pipeline crashing during the clustering step, or if you have many large sample files. 
      
 ###### Threads
 
@@ -179,3 +183,8 @@ genomes:
 
 ### About the Output Files                   
         
+### References
+
+Johnson NR, Yeoh JM, Coruh C, Axtell MJ. (2016). G3 6:2103-2111.
+    doi:10.1534/g3.116.030452
+
