@@ -117,7 +117,7 @@ rule cluster:
 		"--nohp "
 		"--readfile {input} "
 		"--genomefile {params.genome}.fasta "
-		"--outdir data/5_clustered/ && "
+		"--outdir data/5_clustered/ 1>> output_logs/5_outlog.txt && "
 		"mv data/5_clustered/*.bam data/5_clustered/merged.bam "
 
 # Split merged alignments file into multiple BAM files by sample name
