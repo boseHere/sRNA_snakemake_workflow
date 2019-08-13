@@ -40,7 +40,7 @@ $ singularity exec mosher_lab_srna.sif snakemake --cores 10
 
 ### How to Run the Pipeline
 
-1. Ensure that the [Dependencies] for the pipeline have been installed.     
+1. Ensure that the [Dependencies](#dependencies) for the pipeline have been installed.     
      
 2. Fork this repository into your current directory from the command line by running     
 ```     
