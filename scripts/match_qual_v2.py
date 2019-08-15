@@ -10,17 +10,16 @@ with open(snakemake.input[0], 'r') as the_file:
             parts = line.split("\t")
             sample = parts[1][5:-13]
             seq_id = parts[0]
-            file_a = open("data/8_fastqs/" + str(sample) + ".fastq", "a+")
+            file_a = open("data/7_fastqs/" + str(sample) + ".fastq", "a+")
 
             if sample not in samples:
                 samples[sample] = {}
-                qual_file = open("data/4_c_m_filtered/" + str(
-                                                sample) + "_c_m_filtered.fq")
+                qual_file = gzip.open("data/4_c_m_filtered/" + str(
+                                                sample) + "_c_m_filtered.fq.gz")
                 j = 0
                 for in_line in qual_file:
-
+                    in_line = in_line.decode("utf-8")
                     in_line = in_line.strip()
-                    #in_line = in_line.decode("utf-8")
                     if j == 0:
                         in_parts = in_line.split()
                         seq_id_in = in_parts[0]
