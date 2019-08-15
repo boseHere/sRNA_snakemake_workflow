@@ -213,7 +213,7 @@ Once the pipeline has completed running, you will see 7 additional sub-directori
 
 This flowchart demonstrates the steps of the pipeline, including what tools are used, what files are created, and where they are stored.
 
-![Flowchart](https://github.com/boseHere/misc/blob/master/pipeline_8_15_19.png?raw=true)
+![Flowchart](dag.png)
 
 ### References
 
