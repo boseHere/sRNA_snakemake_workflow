@@ -4,15 +4,19 @@ trimming:
     adapter_seq : TGGAATTCTCGG
     quality : 30
 
-aligning: 
-    multi_map_handler: u     
-    sort_memory : 20G     
 
-threads: 
+aligning:
+    multi_map_handler: u
+    sort_memory : 20G
+
+
+threads:
     filter_rna_bowtie : 10
     filter_c_m_bowtie : 10
     shortstack_cluster : 10
     mapped_reads_samtools : 10
+    fastqc_report : 1
+
 
 paths:
     trim_galore : trim_galore
@@ -26,14 +30,18 @@ samples:
 
 
 genomes:
-    filter_rna : ./genomes/filter_rna/ # GENOME BUILD NAME (FASTA FILENAME 
-                                       # WITHOUT .FASTA EXTENDION)
+    filter_rna : ./genomes/filter_rna/ # GENOME BUILD NAME (FASTA FILENAME
+                                       # WITHOUT .FASTA EXTENDION). THIS
+                                       # FILTER IS RECOMMENDED BUT OPTIONAL.
+                                       # IF THE USER INTENDS NOT TO USE THIS
+                                       # FILTERING STEP, LEAVE THIS COMMENT AS
+                                       # IS.
 
-    chloro_mitochondria : ./genomes/chloro_mitocondrion/ # GENOME BUILD 
+    chloro_mitochondria : ./genomes/chloro_mitocondrion/ # GENOME BUILD
                                                    # NAME (FASTA FILENAME
                                                    # WITHOUT .FASTA EXTENDION)
 
-    reference_genome : ./genomes/reference_genome/ # GENOME BUILD 
+    reference_genome : ./genomes/reference_genome/ # GENOME BUILD
                                                    # NAME (FASTA FILENAME
                                                    # WITHOUT .FASTA EXTENDION)
 
