@@ -5,10 +5,10 @@ Runs an sRNA-seq data cleaning pipeline on a collection of fastq.gz, fastq, fq, 
 Table of Contents
 =================
 
-* [Dependencies](#dependencies)    
-* [How to Run the Pipeline](#how-to-run-the-pipeline)       
-  - [Directory Structure](#directory-structure)     
-  - [Editing Config](#editing-config)     
+* [Dependencies](#dependencies)
+* [How to Run the Pipeline](#how-to-run-the-pipeline)
+  - [Directory Structure](#directory-structure)
+  - [Editing Config](#editing-config)
     * [Automatically Fill In Config](#automatically-fill-in-config)     
     * [Trimming](#trimming)       
     * [Aligning](#aligning)           
