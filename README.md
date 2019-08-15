@@ -23,16 +23,7 @@ Table of Contents
 
 ### Dependencies
 
-* Snakemake  5.4.5
-* Trimgalore 0.6.2
-* cutadapt 2.3
-* fastqc 0.11.7
-* samtools 1.9
-* bowtie 1.2.2
-* ShortStack 3.8.5
-* RNAfold 2.3.2
-* XZ Utils 5.2.2
-* liblzma 5.2.2
+Snakemake 5.4.5, Trimgalore 0.6.2, cutadapt 2.3. fastqc 0.11.7, samtools 1.9, bowtie 1.2.2, ShortStack 3.8.5, RNAfold 2.3.2, XZ Utils 5.2.2, liblzma 5.2.2
 
 *Coming soon!* A singularity container with all dependent software to run this pipeline. Once the container is published, running this
 pipeline will be as simple as installing singularity, pulling the .sif image, and running:
