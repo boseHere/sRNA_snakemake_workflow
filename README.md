@@ -170,7 +170,7 @@ The three file paths require the BUILD NAME of the genome file. This is simply t
 genomes:
     filter_rna : ./genomes/filter_rna/my_rna_genome
     chloro_mitochondria : ./genomes/chloroplast_mitocondrion/my_cm_genome
-    reference_genome : ./genomes/reference_genome/my_ref_genome.fasta
+    reference_genome : ./genomes/reference_genome/my_ref_genome
 ```
 
 ### About the Output Files                   
