@@ -50,11 +50,11 @@ rule filter_rna:
     input:
         "data/2_trimmed/{sample}_trimmed.fq.gz"
     output:
-        fqgz = "data/3_rfam_filtered/{sample}_rfam_filtered.fq.gz"
+        fqgz = "data/3_ncrna_filtered/{sample}_ncrna_filtered.fq.gz"
     threads:
         config["threads"]["filter_rna_bowtie"]
     params:
-        fq = "data/3_rfam_filtered/{sample}_rfam_filtered.fq",
+        fq = "data/3_ncrna_filtered/{sample}_ncrna_filtered.fq",
         rna_genome = config["genomes"]["filter_rna"],
         path = config["paths"]["bowtie"]
     run:
@@ -84,7 +84,7 @@ rule filter_c_m:
     input:
         name="data/2_trimmed/{sample}_trimmed.fq.gz" \
         if config["genomes"]["filter_rna"] == "./genomes/filter_rna/" else \
-        "data/3_rfam_filtered/{sample}_rfam_filtered.fq.gz"
+        "data/3_ncrna_filtered/{sample}_ncrna_filtered.fq.gz"
     output:
         fqgz = "data/4_c_m_filtered/{sample}_c_m_filtered.fq.gz"
     threads:
@@ -195,7 +195,7 @@ rule retrieve_encoding_quality:
     input:
         "data/temp_converted/{sample}_converted.fq"
     output:
-        "data/7_fastqs/{sample}.fastq"
+        "data/7_fastqs/{sample}.fastq.gz"
     script:
         "scripts/match_qual_v2.py"
 
@@ -203,7 +203,7 @@ rule retrieve_encoding_quality:
 # Print length profiles of each sample to a log file
 rule log_lengths:
     input:
-        "data/7_fastqs/{sample}.fastq"
+        "data/7_fastqs/{sample}.fastq.gz"
     output:
         "data/8_fastqc_reports/{sample}_fastqc.zip"
     threads:
