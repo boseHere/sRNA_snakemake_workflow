@@ -17,6 +17,7 @@ Table of Contents
     * [Samples](#samples)     
     * [Genomes](#genomes)         
 * [About the Output Files](#about-the-output-files)
+* [Flowchart of Pipeline Functions](#flowchart-of-pipeline-functions)
 * [References](#references)
 
 
@@ -48,11 +49,10 @@ $ singularity exec mosher_lab_srna.sif snakemake --cores 10
 $ git clone https://github.com/boseHere/sRNA_snakemake_workflow     
 $ cd sRNA_snakemake_workflow     
 ```     
-3. Add your sample files to the `data/1_raw/` directory. These can be fastq, fq, fastq.gz, or fq.gz files.      
-4. Add your genomes files (chloroplast and mitochondria genome, non-sRNA genome, and overall reference genome) to the corresponding subdirectories in the `genomes` directory.     
+3. Add your sample files to the `data/1_raw/` directory. These can be fastq, fq, fastq.gz, or fq.gz files. See [Samples](#samples) for more info about this.       
+4. Add your genomes files (chloroplast and mitochondria genome, reference genome, and optional non-coding RNA genome) to the corresponding subdirectories in the `genomes` directory. See [Genomes](#genomes) for more info about this.      
 5. Check that your directory structure within the `sRNA_snakemake_workflow` folder matches that described. See [Directory Structure](#directory-structure) for a concise glance at what your directory structure should look like from the top level before running the pipeline.     
 6. Fill out the config.yaml file in the top level directory. See [Editing Config](#editing-config) for more information on the different sections of the file and how to fill them out. The config.yaml file that is downloaded with this repository also contains comments to assist with filling it in.     
-
 7. Execute the following on the command line from the top level of the directory structure:
 ```
 $ snakemake --cores # INSERT MAX NUMBER OF CORES HERE
@@ -63,10 +63,9 @@ the pipeline again:
 $ snakemake --unlock
 ```
 
-
 #### Directory Structure
 
-Ensure you have the following directory structure in place before running snakemake from the top level directory. This structure should be already in place if you download this repository, and should only require that you fill in your sample and genome files.
+Ensure you have the following directory structure in place before running snakemake from the top level directory. This structure should be already in place if you download this repository with `git clone`, and should only require that you fill in your sample and genome files.
 ```
 .
 ├── _data
@@ -74,11 +73,11 @@ Ensure you have the following directory structure in place before running snakem
 │       └── # YOUR FASTQ.GZ, FASTQ, FQ.GZ, AND FQ FILES CONTAINING SRNA-SEQ DATA HERE
 ├── _genomes
 │   └── _chloroplast_mitocondrion
-│       └── # FASTA FILE CONTAINING THE ASSEMBLED CHLOROPLAST + MITOCHODRIAL GENOME FOR YOUR ORGANISM HERE
+│       └── # MULTI-FASTA FILE CONTAINING CHLOROPLAST AND/OR MITOCHODRIAL GENOME(S) FOR YOUR ORGANISM HERE
 │   └── _filter_rna
-│       └── # FASTA FILE CONTAINING THE ASSEMBLED NON-SRNA RNA GENOME FOR YOUR ORGANISM HERE
-│   └── _refenrece_genome
-│       └── # FASTA FILE CONTAINING THE ASSEMBLED GENOME FOR YOUR ORGANISM HERE
+│       └── # MULTI-FASTA FILE CONTAINING NON-CODING RNA SEQUENCES TO BE FILTERED OUT OF INPUT READS HERE (OPTIONAL)
+│   └── _reference_genome
+│       └── # MULTI-FASTA FILE CONTAINING THE GENOME FOR YOUR ORGANISM HERE
 ├── _output_logs
 ├── _scripts
 │   └── build_config.sh
@@ -168,11 +167,13 @@ Sample names should be indented using 4 spaces (not the indent key), and be prec
 
 ##### Genomes
 
-Fill in the three absolute paths with the names of your genome files.     
+Fill in the three absolute paths with the names of your genome files.      
 
-The three file paths require the BUILD NAME of the genome file. This is simply the name of the genome files without the .fasta extensions.     
+One of the filtering steps for this pipeline is recommended for sRNA alignment, but not required for the pipeline to run. This step removes contaminating highly expressed RNAs from your sequences. The genome file, containing these contaminating sequences, used to perform this filtering step should be placed in `/genomes/filter_rna/`. However, if you choose to not use this step, then no file is required in this directory. The genome file for this step can be obtained from [Ensembl](http://ensemblgenomes.org/) or [Rfam](https://rfam.xfam.org/). MAKE SURE that the file you use for this filtering step is stripped of microRNAs and preRNAs before running the pipeline; these should be included in the alignment process.
 
-*Example*
+The three file paths require the BUILD NAME of the genome file. This is simply the name of the genome files without the .fasta extensions. If you choose not to use the additional filtering step to remove additional contaminating RNAs, simply leave the file path as is.
+
+*Example (using the additional filtering step)*
 ```
 genomes:
     filter_rna : ./genomes/filter_rna/my_rna_genome
@@ -180,7 +181,29 @@ genomes:
     reference_genome : ./genomes/reference_genome/my_ref_genome
 ```
 
-### About the Output Files                   
+*Example (NOT using the additional filtering step)*
+```
+genomes:
+    filter_rna : ./genomes/filter_rna/
+    chloro_mitochondria : ./genomes/chloroplast_mitocondrion/my_cm_genome
+    reference_genome : ./genomes/reference_genome/my_ref_genome
+```
+
+### About the Output Files        
+
+Once the pipeline has completed running, you will see 7 additional sub-directories appear in the /data/ directory alongside the 1_raw directory. These should include:
+* /2_trimmed/: This folder contains 1 fastq.gz file for each sample provided as input to the pipeline. The files in this folder have been selected for size and quality according to the specification given in the [Trimming](#trimming) section of the config file.      
+* /3_ncrna_filtered/: This folder will only appear if the additional filtering step, as described in [Genomes](#genomes) was used. This folder will contain 1 fq.gz file for each sample provided as input to the pipeline. These files have had all contaminating non-coding RNAs filtered out.      
+* /4_c_m_filtered/: This folder contains 1 fq.gz file for each sample provided as input to the pipeline. These files have had all chloroplast and/or mitochondrial reads filtered out.         
+* /5_clustered/: This folder contains the output of aligning all sample files to the given reference genome using [ShortStack](https://github.com/MikeAxtell/ShortStack)         
+* /6_split_by_sample/: This folder contains 1 bam file for each sample provided as input to the pipeline. This file contains the alignment information for each sample.            
+* /7_fastqs/: This folder contains 1 fastq file for each sample provided as input to the pipeline. These files contain the reads that aligned to the reference genome.      
+
+### Flowchart of Pipeline Functions
+
+This flowchart demonstrates the steps of the pipeline, including what tools are used, what files are created, and where they are stored.
+
+![Flowchart](https://github.com/boseHere/misc/blob/master/pipeline_8_15_19.png?raw=true)
 
 ### References
 
