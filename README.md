@@ -69,7 +69,7 @@ Ensure you have the following directory structure in place before running snakem
 │       └── # FASTA FILE CONTAINING THE ASSEMBLED CHLOROPLAST + MITOCHODRIAL GENOME FOR YOUR ORGANISM HERE
 │   └── _filter_rna
 │       └── # FASTA FILE CONTAINING THE ASSEMBLED NON-SRNA RNA GENOME FOR YOUR ORGANISM HERE
-│   └── _refenrece_genome
+│   └── _reference_genome
 │       └── # FASTA FILE CONTAINING THE ASSEMBLED GENOME FOR YOUR ORGANISM HERE
 ├── _output_logs 
 ├── _scripts 
