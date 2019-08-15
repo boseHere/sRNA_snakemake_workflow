@@ -147,7 +147,7 @@ Fill in the desired protocol to handle multi-mapping reads during the alignment 
 
 Also fill in the desired amount of memory to be allocated for sorting bam files. The default for this is 20G, though you may want to increase this if you find the pipeline crashing during the clustering step, or if you have many large sample files.
 
-##### Threads
+###### Threads
 
 Set the number of threads for each program to run with. The advised default is 10 for all programs, but this number can be scaled down
 given server limitations. It is advised not to go above 10 threads for each program, as this decreases the number of processes snakemake
@@ -175,9 +175,9 @@ Give names of the sample files located in your /data/1_raw directory *without* f
 
 ```yaml
 samples:
-    - sample_name1
-    - sample_name2
-    - sample_name3
+       - sample_name1
+       - sample_name2
+       - sample_name3
 ```
 
 Sample names should be indented using 4 spaces (not the indent key), and be preceded by a dash character "-" and another space.
