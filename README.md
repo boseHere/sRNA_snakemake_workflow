@@ -186,7 +186,7 @@ The three file paths require the BASE NAME of the genome file. This is simply th
 ```yaml
 genomes:
     filter_rna : ./genomes/filter_rna/my_rna_genome
-    chloro_mitochondria : ./genomes/chloroplast_mitocondrion/my_cm_genome
+    chloro_mitochondria : ./genomes/chloro_mitochondria/my_cm_genome
     reference_genome : ./genomes/reference_genome/my_ref_genome
 ```
 
