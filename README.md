@@ -6,6 +6,7 @@ Table of Contents
 =================
 
 * [Dependencies](#dependencies)
+  - [Get Dependencies With Docker](#get-dependencies-with-docker)
 * [How to Run the Pipeline](#how-to-run-the-pipeline)
   - [Directory Structure](#directory-structure)
   - [Editing Config](#editing-config)
@@ -25,10 +26,12 @@ Table of Contents
 
 Snakemake 5.4.5, Trimgalore 0.6.2, cutadapt 2.3. fastqc 0.11.7, samtools 1.9, bowtie 1.2.2, ShortStack 3.8.5, RNAfold 2.3.2, XZ Utils 5.2.2, liblzma 5.2.2
 
-*Coming soon!* A singularity container with all dependent software to run this pipeline. Once the container is published, running this
-pipeline will be as simple as installing singularity, pulling the .sif image, and running:
+#### Get Dependencies With Docker
+
+This requires having Docker installed.    
+To pull a docker image containing all the above software pre-installed into your current directory, run:
 ```
-$ singularity exec mosher_lab_srna.sif snakemake --cores 10
+$ docker pull bose1/mosher_lab_srna:srna_analysis
 ```
 
 ### How to Run the Pipeline
