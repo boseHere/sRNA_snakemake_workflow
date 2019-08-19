@@ -37,11 +37,10 @@ genomes:
                                        # FILTERING STEP, LEAVE THIS COMMENT AS
                                        # IS.
 
-    chloro_mitochondria : ./genomes/chloro_mitocondrion/ # GENOME BUILD
+    chloro_mitochondria : ./genomes/chloro_mitochondria/ # GENOME BUILD
                                                    # NAME (FASTA FILENAME
                                                    # WITHOUT .FASTA EXTENDION)
 
     reference_genome : ./genomes/reference_genome/ # GENOME BUILD
                                                    # NAME (FASTA FILENAME
                                                    # WITHOUT .FASTA EXTENDION)
-
