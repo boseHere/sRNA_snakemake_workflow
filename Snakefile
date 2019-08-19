@@ -131,12 +131,14 @@ rule cluster:
         --mismatches 0 \
         --mmap {params.multi_map_handler} \
         --bowtie_cores {threads} \
-        --nohp \
         --readfile {input} \
         --genomefile {params.genome}.fasta \
         --outdir data/5_clustered/ 1>> output_logs/5_outlog.txt && \
-        mv data/5_clustered/*.bam data/5_clustered/merged.bam
+        mv data/5_clustered/*.bam data/5_clustered/merged.bam && \
+        scripts/combine_counts_results.py data/5_clustered/Counts.txt \
+        data/5_clustered/Results.txt --output_dir data/5_clustered/
         '''
+
 # Split merged alignments file into multiple BAM files by sample name
 rule split_by_sample:
     input:
@@ -198,7 +200,6 @@ rule retrieve_encoding_quality:
         "data/7_fastqs/{sample}.fastq.gz"
     script:
         "scripts/match_qual_v2.py"
-
 
 # Print length profiles of each sample to a log file
 rule log_lengths:

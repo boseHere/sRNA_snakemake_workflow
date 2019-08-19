@@ -26,35 +26,45 @@ def get_args():
                                                  "of the two inputs.")
     parser.add_argument("counts", type=str, help="Counts.txt file name")
     parser.add_argument("results", type=str, help="Results.txt file name")
+    parser.add_argument("--output_dir", nargs="?", type=str, const="./",
+                        default="./", help="Directory location for output file."
+                                           " Set to current directory by "
+                                           "default")
 
     args = parser.parse_args()
     return args
 
 
-def get_library_sizes(counts):
+def get_library_sizes(args):
     """
     This function takes the Counts.txt file as input. It generates a list of
     library sizes, to be used in the calculation of rpm and rpkm.
-    :param: counts -- An open Counts.txt file
+    :param: args -- An argparse object. Elements of the object can be accessed
+                     by their option name as attributes)
     :return: library_sizes -- A list of lists, where each element of the list
                      contains the name of a library and the size of
                      that library
     """
-    sizes = []
-    head = True
-    for line in counts:
-        line = line.strip()
-        if head:
-            head = False
-            samples = line.split("\t")[3:]
-            total_counts = [0] * len(samples)
-        else:
-            counts = line.split("\t")[3:]
-            for i in range(len(counts)):
-                total_counts[i] += int(counts[i])
+    with open(args.counts, "r") as counts:
+        sizes = []
+        head = True
+        for line in counts:
+            line = line.strip()
+            if head:
+                head = False
+                samples = line.split("\t")[3:]
+                total_counts = [0] * len(samples)
+            else:
+                counts = line.split("\t")
+                if counts[1] == "NA":
+                    break
+                else:
+                    counts = counts[3:]
+                    for i in range(len(counts)):
+                        total_counts[i] += int(counts[i])
 
-    for i in range(len(samples)):
-        sizes.append([samples[i], total_counts[i]])
+        for i in range(len(samples)):
+            sizes.append([samples[i], total_counts[i]])
 
     return sizes
 
@@ -73,9 +83,11 @@ def combine(args, library_sizes):
     :return: none
     """
     with open(args.counts, "r") as counts, open(args.results, "r") as results:
-        with open("./counts_results.txt", "w+") as file1, \
-                open("./counts_results_rpm.txt","w+") as file2, \
-                open("./counts_results_rpkm.txt", "w+") as file3:
+        with open(args.output_dir + "counts_results.txt", "w+") as file1, \
+                open(args.output_dir + "counts_results_rpm.txt","w+") \
+                as file2, \
+                open(args.output_dir + "counts_results_rpkm.txt", "w+") \
+                as file3:
             head = True
             for count_line, results_line in zip(counts, results):
                 count_line = count_line.strip()
@@ -167,8 +179,7 @@ def process(cline, rline, file1, file2, file3, library_sizes):
 
 def main():
     args = get_args()
-    with open(args.counts, "r") as counts:
-        library_sizes = get_library_sizes(counts)
+    library_sizes = get_library_sizes(args)
     combine(args, library_sizes)
 
 
