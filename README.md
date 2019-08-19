@@ -69,7 +69,7 @@ Ensure you have the following directory structure in place before running snakem
 │   └── 1_raw
 │       └── # YOUR FASTQ.GZ, FASTQ, FQ.GZ, AND FQ FILES CONTAINING SRNA-SEQ DATA HERE
 ├── _genomes
-│   └── _chloroplast_mitocondrion
+│   └── _chloro_mitochondria
 │       └── # MULTI-FASTA FILE CONTAINING CHLOROPLAST AND/OR MITOCHODRIAL GENOME(S) FOR YOUR ORGANISM HERE
 │   └── _filter_rna
 │       └── # MULTI-FASTA FILE CONTAINING NON-CODING RNA SEQUENCES TO BE FILTERED OUT OF INPUT READS HERE (OPTIONAL)
