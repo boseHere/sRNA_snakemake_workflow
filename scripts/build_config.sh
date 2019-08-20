@@ -15,14 +15,15 @@ echo " " >> config.yaml
 echo "aligning: " >> config.yaml
 echo "    multi_map_handler: u " >> config.yaml
 echo "    sort_memory : 20G " >> config.yaml
+echo "    no_mirna : Y " >> config.yaml
 
 echo " " >> config.yaml
 
 echo "threads: " >> config.yaml
-echo "    filter_rna_bowtie : 10 " >> config.yaml
-echo "    filter_c_m_bowtie : 10 " >> config.yaml
-echo "    shortstack_cluster : 10 " >> config.yaml
-echo "    mapped_reads_samtools : 10 " >> config.yaml
+echo "    filter_rna_bowtie : 5 " >> config.yaml
+echo "    filter_c_m_bowtie : 5 " >> config.yaml
+echo "    shortstack_cluster : 5 " >> config.yaml
+echo "    mapped_reads_samtools : 5 " >> config.yaml
 echo "    fastqc_report : 1 " >> config.yaml
 echo " " >> config.yaml
 
