@@ -10,7 +10,7 @@ Table of Contents
 * [How to Run the Pipeline](#how-to-run-the-pipeline)
   - [Directory Structure](#directory-structure)
   - [Editing Config](#editing-config)
-    * [Automatically Fill In Config](#automatically-fill-in-config)
+    * [Build Default Config](#build-default-config)
     * [Trimming](#trimming)
     * [Aligning](#aligning)
     * [Threads](#threads)
@@ -21,12 +21,11 @@ Table of Contents
 * [Flowchart of Pipeline Functions](#flowchart-of-pipeline-functions)
 * [References](#references)
 
-
-### Dependencies
+## Dependencies
 
 Snakemake 5.4.5, Trimgalore 0.6.2, cutadapt 2.3. fastqc 0.11.7, samtools 1.9, bowtie 1.2.2, ShortStack 3.8.5, RNAfold 2.3.2, XZ Utils 5.2.2, liblzma 5.2.2
 
-#### Get Dependencies With Docker
+### Get Dependencies With Docker
 
 This requires having Docker installed.    
 To pull a docker image containing all the above software pre-installed into your current directory, run:
@@ -34,16 +33,16 @@ To pull a docker image containing all the above software pre-installed into your
 $ docker pull bose1/mosher_lab_srna:srna_analysis
 ```
 
-### How to Run the Pipeline
+## How to Run the Pipeline
 
 1. Ensure that the [Dependencies](#dependencies) for the pipeline have been installed.
 
 2. Clone this repository into your current directory from the command line by running:
 
-```shell
-$ git clone https://github.com/boseHere/sRNA_snakemake_workflow
-$ cd sRNA_snakemake_workflow
-```
+    ```shell
+    $ git clone https://github.com/boseHere/sRNA_snakemake_workflow
+    $ cd sRNA_snakemake_workflow
+    ```
 
 3. Add your sample files to the `data/1_raw/` directory. These can be fastq, fq, fastq.gz, or fq.gz files. See [Samples](#samples) for more info about this.
 4. Add your genomes files (chloroplast and mitochondria genome, reference genome, and optional non-coding RNA genome) to the corresponding subdirectories in the `genomes` directory. See [Genomes](#genomes) for more info about this.
@@ -62,11 +61,11 @@ the pipeline again:
 $ snakemake --unlock
 ```
 
-#### Directory Structure
+### Directory Structure
 
 Ensure you have the following directory structure in place before running snakemake from the top level directory. This structure should be already in place if you download this repository with `git clone`, and should only require that you fill in your sample and genome files.
 
-```
+```ascii
 .
 ├── _data
 │   └── 1_raw
@@ -90,7 +89,7 @@ Ensure you have the following directory structure in place before running snakem
 
 As snakemake runs, the data folder will become populated with folders numbered in the order they are created.
 
-#### Editing Config
+### Editing Config
 
 Editing the config.yaml file for this pipeline allows you to specify your files, reference genomes, software pathways, and trimming
 parameters. To edit the config file, run
@@ -101,9 +100,9 @@ $ nano config.yaml
 
 then fill out the sections as described below. Save via `Ctrl-o`, then exit the config file via `Ctrl-x`.
 
-##### Automatically Fill In Config
+#### Build Default Config
 
-You have the option to either fill in all sections of the config.yaml file manually, or to allow the custom script build_config.sh to fill in the names of your samples and genomes according to what you have in your /data/1_raw and /genomes directories.
+You have the option to either fill in all sections of the config.yaml file manually, or to allow the custom script build_config.sh to fill in the names of your samples and genomes according to what you have in your /data/1_raw/ and /genomes/ directories.
 
 This option was created because filling in the config.yaml with the names of your samples and genomes can be tedious, especially if you have a lot of samples or don't already have a list of all your sample filenames without their extensions. Further specifications on filling out the config file are noted in the config.yaml template that comes with the download of this pipeline, so feel free to fill it out manually if you prefer.
 
@@ -127,6 +126,7 @@ Set the minimum and maximum read length you are interested in. The advised defau
 length of 26.
 
 Set the adaptor sequence used when creating the libraries. Some commonly used adapters:
+
   * Illumina Adapter: AGATCGGAAGAGC
   * Illumina sRNA Adapter: TGGAATTCTCGG
   * Nextera Adapter: CTGTCTCTTATA
@@ -140,6 +140,8 @@ Set the minimum read quality cut-off. Default is 30.
 Fill in the desired protocol to handle multi-mapping reads during the alignment process. The options for this, as described by the [ShortStack documentation](https://github.com/MikeAxtell/ShortStack) include n (none), r (random), u (unique- seeded guide), or f (fractional-seeded guide). The suggested default is u.
 
 Also fill in the desired amount of memory to be allocated for sorting bam files. The default for this is 20G, though you may want to increase this if you find the pipeline crashing during the clustering step, or if you have many large sample files.
+
+For the no_mirna option, enter Y if you do **NOT** want to include miRNAs in the alignment. Enter N if you **DO** want to include miRNAs in the alignment.
 
 ##### Threads
 
@@ -202,23 +204,32 @@ genomes:
     reference_genome : ./genomes/reference_genome/my_ref_genome
 ```
 
-### About the Output Files
+## About the Output Files
 
 Once the pipeline has completed running, you will see 7 additional sub-directories appear in the /data/ directory alongside the 1_raw directory. These should include:
+
 * /2_trimmed/: This folder contains 1 fastq.gz file for each sample provided as input to the pipeline. The files in this folder have been selected for size and quality according to the specification given in the [Trimming](#trimming) section of the config file.
 * /3_ncrna_filtered/: This folder will only appear if the additional filtering step, as described in [Genomes](#genomes) was used. This folder will contain 1 fq.gz file for each sample provided as input to the pipeline. These files have had all contaminating non-coding RNAs filtered out.
 * /4_c_m_filtered/: This folder contains 1 fq.gz file for each sample provided as input to the pipeline. These files have had all chloroplast and/or mitochondrial reads filtered out.
-* /5_clustered/: This folder contains the output of aligning all sample files to the given reference genome using [ShortStack](https://github.com/MikeAxtell/ShortStack)
+* /5_clustered/: This folder contains the output of aligning all sample files to the given reference genome using [ShortStack](https://github.com/MikeAxtell/ShortStack). This
+includes:
+    - Counts.txt : Part of standard ShortStack output. See [ShortStack documentation](https://github.com/MikeAxtell/ShortStack) for further info about the contents of this file.
+    - counts_results.txt: Combines the alignment information from Counts.txt and Results.txt. Read counts are in the original raw count numbers. Excludes unplaced reads.
+    - counts_results_rpm.txt: Combines the alignment information from Counts.txt and Results.txt. Read counts are in reads per million mapped reads (RPM). Excludes unplaced reads.
+    - counts_results_rpkm.txt: Combines the alignment information from Counts.txt and Results.txt. Read counts are in reads per kilo base per million mapped reads (RPKM). Excludes unplaced reads.
+    - merged.bam: Alignment file. Part of standard ShortStack output. See [ShortStack documentation](https://github.com/MikeAxtell/ShortStack) for further info about the contents of this file and the ShortStack-specific tags used in these files. 
+    - Results.txt: Part of standard ShortStack output. See [ShortStack documentation](https://github.com/MikeAxtell/ShortStack) for further info about the contents of this file.
+    - Unplaced.txt: Part of standard ShortStack output. See [ShortStack documentation](https://github.com/MikeAxtell/ShortStack) for further info about the contents of this file.
 * /6_split_by_sample/: This folder contains 1 bam file for each sample provided as input to the pipeline. This file contains the alignment information for each sample.
 * /7_fastqs/: This folder contains 1 fastq file for each sample provided as input to the pipeline. These files contain the reads that aligned to the reference genome.
 
-### Flowchart of Pipeline Functions
+## Flowchart of Pipeline Functions
 
 This flowchart demonstrates the steps of the pipeline, including what tools are used, what files are created, and where they are stored.
 
 ![Flowchart](dag.png)
 
-### References
+## References
 
 Johnson NR, Yeoh JM, Coruh C, Axtell MJ. (2016). G3 6:2103-2111.
     doi:10.1534/g3.116.030452
