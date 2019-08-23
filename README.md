@@ -252,3 +252,5 @@ Johnson NR, Yeoh JM, Coruh C, Axtell MJ. (2016). G3 6:2103-2111.
 Grover JW, Kendall T, Baten A, Burgess D, Freeling M, King GJ, and Mosher RA.
     Maternal components of RNA ‐ directed DNA methylation are required for seed development in Brassica rapa.
     The Plant Journal. 2018. doi:10.1111/tpj.13910
+
+Krueger, F. (2015). Trim galore. A wrapper tool around Cutadapt and FastQC to   consistently apply quality and adapter trimming to FastQ files.
