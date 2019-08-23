@@ -161,6 +161,11 @@ Set the number of threads for each program to run with. The advised defaults are
 
 ##### Paths
 
+* `trim_galore : <str>`
+* `bowtie : <str>`
+* `ShortStack : <str>`
+* `samtools : <samtools>`
+
 Give absolute paths to the trim_galore, bowtie, ShortStack, and samtools software if they are not already sym-linked to a
 location in /usr/local/bin/. To test if these software are sym-linked, you can run the following on the command line.
 
@@ -172,11 +177,6 @@ $ which Samtools
 ```
 
 If these lines return a path, leave this section as is upon downloading.
-
-* `trim_galore : <str>`
-* `bowtie : <str>`
-* `ShortStack : <str>`
-* `samtools : <samtools>`
 
 ##### Samples
 
