@@ -2,8 +2,7 @@
 
 Runs an sRNA-seq data analysis pipeline on a collection of fastq.gz, fastq, fq, or fq.gz files.
 
-Table of Contents
-=================
+## Table of Contents
 
 * [Dependencies](#dependencies)
   - [Get Dependencies With Docker](#get-dependencies-with-docker)
@@ -122,32 +121,43 @@ to proceed with filling in the [Trimming](#trimming), [Aligning](#aligning), [Th
 
 ##### Trimming
 
-Set the minimum and maximum read length you are interested in. The advised defaults for sRNA are a minimum length of 19 and a maximum
-length of 26.
+These options are used by the [Trim Galore](https://github.com/FelixKrueger/TrimGalore/blob/master/Docs/Trim_Galore_User_Guide.md) to size and quality select reads from the raw data files.
 
-Set the adaptor sequence used when creating the libraries. Some commonly used adapters:
-
-  * Illumina Adapter: AGATCGGAAGAGC
-  * Illumina sRNA Adapter: TGGAATTCTCGG
-  * Nextera Adapter: CTGTCTCTTATA
+* `min_length : <int>`
+    * Set the minimum read length you are interested in. The advised default for sRNA analysis is 19.
+* `max_length : <int>`
+    * Set the maxmimum read length you are interested in. The advised default for sRNA analysis is 26.
+* `adapter_seq : <str>`
+    * Set the adaptor sequence used when creating the libraries. Some commonly used adapters:
+        * Illumina Adapter: AGATCGGAAGAGC
+        * Illumina sRNA Adapter: TGGAATTCTCGG
+        * Nextera Adapter: CTGTCTCTTATA
+    The default is the Illumina sRNA adapter
+* `quality : <int>`
+    * Set the minumum Phred score for reads. Reads with quality lower than this will be removed. The default is 30.
 
 This pipeline (currently) will **not** work on sequences that have already been adapter-trimmed.
 
-Set the minimum read quality cut-off. Default is 30.
-
 ##### Aligning
 
-Fill in the desired protocol to handle multi-mapping reads during the alignment process. The options for this, as described by the [ShortStack documentation](https://github.com/MikeAxtell/ShortStack) include n (none), r (random), u (unique- seeded guide), or f (fractional-seeded guide). The suggested default is u.
+These options are used by the [ShortStack](https://github.com/MikeAxtell/ShortStack) aligner to align reads to a reference genome.
 
-Also fill in the desired amount of memory to be allocated for sorting bam files. The default for this is 20G, though you may want to increase this if you find the pipeline crashing during the clustering step, or if you have many large sample files.
-
-For the no_mirna option, enter Y if you do **NOT** want to include miRNAs in the alignment. Enter N if you **DO** want to include miRNAs in the alignment.
+* `multi_map_handler : <str>`
+    * Fill in the desired protocol to handle multi-mapping reads during the alignment process. The options for this, as described by the [ShortStack documentation](https://github.com/MikeAxtell/ShortStack) include n (none), r (random), u (unique- seeded guide), or f (fractional-seeded guide). The suggested default is u, which assigns multi-mapping reads to regions with higher levels of uniquely mapping reads.
+* `sort_memory : <int>G`
+    * Fill in the desired amount of memory to be allocated for sorting bam files. The default for this is 20G, though you may want to increase this if you find the pipeline crashing during the clustering step, or if you have many large sample files.
+* `no_mirna : <str>`
+    * Enter Y if you do **NOT** want to include miRNAs in the alignment. Enter N if you **DO** want to include miRNAs in the alignment.
 
 ##### Threads
 
-Set the number of threads for each program to run with. The advised default is 10 for all programs, but this number can be scaled down
-given server limitations. It is advised not to go above 10 threads for each program, as this decreases the number of processes snakemake
-can run in parallel.
+Set the number of threads for each program to run with. The advised defaults are 5 for bowtie, shortstack, and samtools, and 1 for fastqc, but these numbers can be scaled up or down given server limitations. It is advised not to go above 10 threads for each program, as this decreases the number of processes snakemake can run in parallel.
+
+* `filter_rna_bowtie : <int>`
+* `filter_c_m_bowtie : <int>`
+* `shortstack_cluster : <int>`
+* `mapped_reads_samtools : <int>`
+* `fastqc_report : <int>`
 
 ##### Paths
 
@@ -162,6 +172,11 @@ $ which Samtools
 ```
 
 If these lines return a path, leave this section as is upon downloading.
+
+* `trim_galore : <str>`
+* `bowtie : <str>`
+* `ShortStack : <str>`
+* `samtools : <samtools>`
 
 ##### Samples
 
