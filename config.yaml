@@ -8,7 +8,7 @@ trimming:
 aligning:
     multi_map_handler: u
     sort_memory : 20G
-    no_mirna : # Y for yes, N for no
+    no_mirna : # Y for disabling miRNA alignment, N for enabling miRNA alignment
 
 
 threads:
