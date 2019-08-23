@@ -246,11 +246,11 @@ This flowchart demonstrates the steps of the pipeline, including what tools are 
 
 ## References
 
-Johnson NR, Yeoh JM, Coruh C, Axtell MJ. (2016). G3 6:2103-2111.
-    doi:10.1534/g3.116.030452
-
 Grover JW, Kendall T, Baten A, Burgess D, Freeling M, King GJ, and Mosher RA.
     Maternal components of RNA ‐ directed DNA methylation are required for seed development in Brassica rapa.
     The Plant Journal. 2018. doi:10.1111/tpj.13910
+
+Johnson NR, Yeoh JM, Coruh C, Axtell MJ. (2016). G3 6:2103-2111.
+    doi:10.1534/g3.116.030452
 
 Krueger, F. (2015). Trim galore. A wrapper tool around Cutadapt and FastQC to   consistently apply quality and adapter trimming to FastQ files.
