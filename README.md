@@ -151,20 +151,20 @@ These options are used by the [ShortStack](https://github.com/MikeAxtell/ShortSt
 
 ##### Threads
 
-Set the number of threads for each program to run with. The advised defaults are 5 for bowtie, shortstack, and samtools, and 1 for fastqc, but these numbers can be scaled up or down given server limitations. It is advised not to go above 10 threads for each program, as this decreases the number of processes snakemake can run in parallel.
-
 * `filter_rna_bowtie : <int>`
 * `filter_c_m_bowtie : <int>`
 * `shortstack_cluster : <int>`
 * `mapped_reads_samtools : <int>`
 * `fastqc_report : <int>`
 
+Set the number of threads for each program to run with. The advised defaults are 5 for bowtie, shortstack, and samtools, and 1 for fastqc, but these numbers can be scaled up or down given server limitations. It is advised not to go above 10 threads for each program, as this decreases the number of processes snakemake can run in parallel.
+
 ##### Paths
 
 * `trim_galore : <str>`
 * `bowtie : <str>`
 * `ShortStack : <str>`
-* `samtools : <samtools>`
+* `samtools : <str>`
 
 Give absolute paths to the trim_galore, bowtie, ShortStack, and samtools software if they are not already sym-linked to a
 location in /usr/local/bin/. To test if these software are sym-linked, you can run the following on the command line.
