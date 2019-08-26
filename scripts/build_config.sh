@@ -57,8 +57,8 @@ for file in genomes/*/*.fasta; do
     if [ "$section" == "filter_rna" ]; then
         echo "    filter_rna : ./genomes/filter_rna/"$build >> config.yaml
         arr+=( "filter_rna" )
-    elif [ "$section" == "chloro_mitocondrion" ]; then
-        echo "    chloro_mitochondria : ./genomes/chloro_mitocondrion/"$build \
+    elif [ "$section" == "chloro_mitocondra" ]; then
+        echo "    chloro_mitochondria : ./genomes/chloro_mitocondria/"$build \
         >> config.yaml
         arr+=( "chloro_mitochondria" )
     elif [ "$section" == "reference_genome" ]; then
@@ -95,7 +95,7 @@ if [ $(contains "${arr[@]}" "filter_rna") == "n" ]; then
 fi
 if [ $(contains "${arr[@]}" "chloro_mitochondria") == "n" ]; then
     echo
-    echo WARNING: No genome found in the /genome/chloro_mitchondira \
+    echo WARNING: No genome found in the /genome/chloro_mitchondria \
     directory. This filter is REQUIRED for this pipeline, and the pipeline \
     will not be able to run correctly without it. It is advised that the user \
     check that the genome containing chloroplast and mitochondria reads is in \
