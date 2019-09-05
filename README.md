@@ -6,6 +6,7 @@ Runs an sRNA-seq data analysis pipeline on a collection of fastq.gz, fastq, fq, 
 
 * [Dependencies](#dependencies)
   - [Get Dependencies With Docker](#get-dependencies-with-docker)
+    * [Run with Singularity](#run-with-singularity)
 * [How to Run the Pipeline](#how-to-run-the-pipeline)
   - [Directory Structure](#directory-structure)
   - [Editing Config](#editing-config)
@@ -26,7 +27,7 @@ Snakemake 5.4.5, Trimgalore 0.6.2, cutadapt 2.3. fastqc 0.11.7, samtools 1.9, bo
 
 ### Get Dependencies With Docker
 
-This requires having Docker installed.    
+This is an optional way to pull all the software dependencies as a Docker image rather than installing them all at once. This requires having Docker installed.
 To pull a docker image containing all the above software pre-installed into your current directory, run:
 ```
 $ docker pull bose1/mosher_lab_srna:srna_analysis
@@ -253,4 +254,6 @@ Grover JW, Kendall T, Baten A, Burgess D, Freeling M, King GJ, and Mosher RA.
 Johnson NR, Yeoh JM, Coruh C, Axtell MJ. (2016). G3 6:2103-2111.
     doi:10.1534/g3.116.030452
 
-Krueger, F. (2015). Trim galore. A wrapper tool around Cutadapt and FastQC to   consistently apply quality and adapter trimming to FastQ files.
+Krueger, F. (2015). Trim galore.
+    A wrapper tool around Cutadapt and FastQC to consistently apply quality 
+    and adapter trimming to FastQ files.

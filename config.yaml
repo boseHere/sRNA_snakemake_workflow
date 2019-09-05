@@ -12,10 +12,10 @@ aligning:
 
 
 threads:
-    filter_rna_bowtie : 10
-    filter_c_m_bowtie : 10
-    shortstack_cluster : 10
-    mapped_reads_samtools : 10
+    filter_rna_bowtie : 5
+    filter_c_m_bowtie : 5
+    shortstack_cluster : 5
+    mapped_reads_samtools : 5
     fastqc_report : 1
 
 
