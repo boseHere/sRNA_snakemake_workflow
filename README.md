@@ -5,7 +5,7 @@ Runs an sRNA-seq data analysis pipeline on a collection of fastq.gz, fastq, fq, 
 ## Table of Contents
 
 * [Dependencies](#dependencies)
-  - [Get Dependencies With Docker](#get-dependencies-with-docker)
+  - [Get Dependencies With Singularity](#get-dependencies-with-singularity)
 * [How to Run the Pipeline](#how-to-run-the-pipeline)
   - [Directory Structure](#directory-structure)
   - [Editing Config](#editing-config)
@@ -24,13 +24,20 @@ Runs an sRNA-seq data analysis pipeline on a collection of fastq.gz, fastq, fq, 
 
 Snakemake 5.4.5, Trimgalore 0.6.2, cutadapt 2.3. fastqc 0.11.7, samtools 1.9, bowtie 1.2.2, ShortStack 3.8.5, RNAfold 2.3.2, XZ Utils 5.2.2, liblzma 5.2.2
 
-### Get Dependencies With Docker
+### Get Dependencies With Singularity
 
-This requires having Docker installed.    
-To pull a docker image containing all the above software pre-installed into your current directory, run:
+This requires having Singularity installed.    
+To pull a docker image containing all the above software pre-installed into your current directory via singularity, run:
 ```
-$ docker pull bose1/mosher_lab_srna:srna_analysis
+$ singularity pull docker://bose1/mosher_lab_srna:ubuntu_18
+```    
+
+If you are running the pipeline on a system with an older Linux kernel (which can often be the case on HPC systems), you may need to pull the Ubuntu 16.04 version of the container. This container will provide all the same software dependencies as the ubuntu 18.04 version of the container. To obtain this version of the container, run:    
 ```
+$ singularity pull docker://bose1/mosher_lab_srna:ubuntu_16
+```
+
+Running either of these commands will download a .sif file. You will need to move this .sif file to the same location as the Snakefile.
 
 ## How to Run the Pipeline
 
@@ -60,6 +67,10 @@ the pipeline again:
 $ snakemake --unlock
 ```
 
+If you are running the pipeline using the [singularity container](#get-dependencies-with-singularity) for software dependencies, execute the following from the top level of the directory structure:
+```shell
+$ singularity exec mosher_lab_srna_ubuntu_18.sif snakemake --cores #
+```
 ### Directory Structure
 
 Ensure you have the following directory structure in place before running snakemake from the top level directory. This structure should be already in place if you download this repository with `git clone`, and should only require that you fill in your sample and genome files.
