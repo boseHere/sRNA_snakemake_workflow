@@ -27,7 +27,7 @@ Snakemake 5.4.5, Trimgalore 0.6.2, cutadapt 2.3. fastqc 0.11.7, samtools 1.9, bo
 ### Get Dependencies With Singularity
 
 This requires having Singularity installed.    
-To pull a docker image containing all the above software pre-installed into your current directory via singularity, run:
+To pull a singularity image containing all the above software pre-installed into your current directory via singularity, run:
 ```
 $ singularity pull docker://bose1/mosher_lab_srna:ubuntu_18
 ```    
