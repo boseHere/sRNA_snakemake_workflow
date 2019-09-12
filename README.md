@@ -26,6 +26,7 @@ Snakemake 5.4.5, Trimgalore 0.6.2, cutadapt 2.3. fastqc 0.11.7, samtools 1.9, bo
 
 ### Get Dependencies With Singularity
 
+
 This requires having Singularity installed.    
 To pull a singularity image containing all the above software pre-installed into your current directory via singularity, run:
 ```
@@ -264,4 +265,7 @@ Grover JW, Kendall T, Baten A, Burgess D, Freeling M, King GJ, and Mosher RA.
 Johnson NR, Yeoh JM, Coruh C, Axtell MJ. (2016). G3 6:2103-2111.
     doi:10.1534/g3.116.030452
 
-Krueger, F. (2015). Trim galore. A wrapper tool around Cutadapt and FastQC to   consistently apply quality and adapter trimming to FastQ files.
+Krueger, F. (2015). Trim galore.
+    A wrapper tool around Cutadapt and FastQC to consistently apply quality 
+    and adapter trimming to FastQ files.
+
