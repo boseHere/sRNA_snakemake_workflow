@@ -61,8 +61,7 @@ Running either of these commands will download a .sif file. You will need to mov
 $ snakemake --cores # INSERT MAX NUMBER OF CORES HERE
 ```
 
-If a previous snakemake process was interrupted, you may need to run the following to unlock the directory before running the snakemake
-the pipeline again:
+If a previous snakemake process was interrupted, you may need to run the following to unlock the directory before running the snakemake pipeline again:
 
 ```shell
 $ snakemake --unlock
