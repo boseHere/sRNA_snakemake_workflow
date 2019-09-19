@@ -56,8 +56,9 @@ for ext in "fastq fq fastq.gz fq.gz".split():
             --max_length {params.max_length} \
             --output_dir data/2_trimmed/ \
             --quality {params.quality} \
-            {input} 2>> output_logs/2_outlog.txt &&
-            fastqc -o data/2_trimmed/ -t {params.fastqc_threads} {output}
+            --fastqc_args "--outdir" \
+            {input} 2>> output_logs/2_outlog.txt
+            
             '''
 
 # Filter out contaminating highly expressed RNAs
