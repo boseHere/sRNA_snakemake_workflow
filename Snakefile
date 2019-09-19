@@ -13,12 +13,25 @@ SAMPLES = config["samples"]
 # Run workflow
 rule all:
     input:
-        expand("data/8_fastqc_reports/{sample}_fastqc.zip", sample=SAMPLES)
+        expand("data/7_fastqs/{sample}_fastqc.zip", sample=SAMPLES),
+        expand("data/1_raw/{sample}_fastqc.zip", sample=SAMPLES)
 
 # Index reference genomes
 onstart:
     shell("scripts/index_genomes.sh")
 
+for ext in "fastq fq fastq.gz fq.gz".split():
+    rule:
+        input:
+            expand("data/1_raw/{{sample}}.{ext}", ext=ext)
+        output:
+            "data/1_raw/{sample}_fastqc.zip"
+        threads:
+            config["threads"]["fastqc_report"]
+        shell:
+            '''
+            fastqc -o data/1_raw/ -t {threads} {input}
+            '''
 
 # Trim reads
 for ext in "fastq fq fastq.gz fq.gz".split():
@@ -32,7 +45,8 @@ for ext in "fastq fq fastq.gz fq.gz".split():
             max_length = config["trimming"]["max_length"],
             adapter_seq = config["trimming"]["adapter_seq"],
             quality = config["trimming"]["quality"],
-            path = config["paths"]["trim_galore"]
+            path = config["paths"]["trim_galore"],
+            fastqc_threads = config["threads"]["fastqc_report"]
         shell:
             '''
             {params.path} \
@@ -42,7 +56,8 @@ for ext in "fastq fq fastq.gz fq.gz".split():
             --max_length {params.max_length} \
             --output_dir data/2_trimmed/ \
             --quality {params.quality} \
-            {input} 2>> output_logs/2_outlog.txt
+            {input} 2>> output_logs/2_outlog.txt &&
+            fastqc -o data/2_trimmed/ -t {params.fastqc_threads} {output}
             '''
 
 # Filter out contaminating highly expressed RNAs
@@ -56,7 +71,8 @@ rule filter_rna:
     params:
         fq = "data/3_ncrna_filtered/{sample}_ncrna_filtered.fq",
         rna_genome = config["genomes"]["filter_rna"],
-        path = config["paths"]["bowtie"]
+        path = config["paths"]["bowtie"],
+        fastqc_threads = config["threads"]["fastqc_report"]
     run:
         if {params.rna_genome} == "./genomes/filter_rna/":
             shell("echo No contaminating RNA filter genome provided, \
@@ -76,7 +92,9 @@ rule filter_rna:
             {params.rna_genome} \
             {input} 1>> output_logs/3_outlog.txt \
 
-            gzip {params.fq}
+            gzip {params.fq} &&
+            
+            fastqc -o data/3_ncrna_filtered/ -t {params.fastqc_threads} {output}
             ''')
 
 # Filter out chloroplast and mitochondrial RNA
@@ -92,7 +110,8 @@ rule filter_c_m:
     params:
         fq = "data/4_c_m_filtered/{sample}_c_m_filtered.fq",
         c_m_genome = config["genomes"]["chloro_mitochondria"],
-        path = config["paths"]["bowtie"]
+        path = config["paths"]["bowtie"],
+        fastqc_threads = config["threads"]["fastqc_report"]
     shell:
         '''
         {params.path} \
@@ -106,7 +125,9 @@ rule filter_c_m:
         {params.c_m_genome} \
         {input.name} 1>> output_logs/4_outlog.txt \
 
-        gzip {params.fq}
+        gzip {params.fq} &&
+
+        fastqc -o data/4_c_m_filtered/ -t {params.fastqc_threads} {output}
         '''
 
 # Cluster and align reads
@@ -149,7 +170,6 @@ rule cluster:
         data/5_clustered/Results.txt \
         --output_dir data/5_clustered/
         '''
-
 
 # Split merged alignments file into multiple BAM files by sample name
 rule split_by_sample:
@@ -214,16 +234,16 @@ rule retrieve_encoding_quality:
         "scripts/match_qual_v2.py"
 
 # Print length profiles of each sample to a log file
-rule log_lengths:
+rule log_lengths_end:
     input:
         "data/7_fastqs/{sample}.fastq.gz"
     output:
-        "data/8_fastqc_reports/{sample}_fastqc.zip"
+        "data/7_fastqs/{sample}_fastqc.zip"
     threads:
         config["threads"]["fastqc_report"]
     shell:
         '''
-        fastqc -o data/8_fastqc_reports -t {threads} {input} \
+        fastqc -o data/7_fastqs/ -t {threads} {input} \
         2>> output_logs/7_outlog.txt && \
         scripts/fastq_readlength_profile.py {input} >> Final_Counts_Log.txt
         '''
