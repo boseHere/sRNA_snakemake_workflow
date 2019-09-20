@@ -2,7 +2,6 @@
 # Date: 5/31/19
 # Run sRNA mapping workflow
 # See README.md for usage instructions
-# Author: Maya Bose
 
 
 # Get configuration
@@ -14,7 +13,8 @@ SAMPLES = config["samples"]
 rule all:
     input:
         expand("data/7_fastqs/{sample}_fastqc.zip", sample=SAMPLES),
-        expand("data/1_raw/{sample}_fastqc.zip", sample=SAMPLES)
+        expand("data/1_raw/{sample}_fastqc.zip", sample=SAMPLES),
+        expand("data/7_fastqs/{sample}_length_profile.txt", sample=SAMPLES)
 
 # Index reference genomes
 onstart:
@@ -56,8 +56,9 @@ for ext in "fastq fq fastq.gz fq.gz".split():
             --max_length {params.max_length} \
             --output_dir data/2_trimmed/ \
             --quality {params.quality} \
-            {input} 2>> output_logs/2_outlog.txt &&
-            fastqc -o data/2_trimmed/ -t {params.fastqc_threads} {output}
+            --fastqc_args "--outdir" \
+            {input} 2>> output_logs/2_outlog.txt
+            
             '''
 
 # Filter out contaminating highly expressed RNAs
@@ -244,6 +245,19 @@ rule log_lengths_end:
     shell:
         '''
         fastqc -o data/7_fastqs/ -t {threads} {input} \
-        2>> output_logs/7_outlog.txt && \
-        scripts/fastq_readlength_profile.py {input} >> Final_Counts_Log.txt
+        2>> output_logs/7_outlog.txt
         '''
+
+rule size_profiles:
+    input:
+        "data/7_fastqs/{sample}.fastq.gz"
+    output: 
+        "data/7_fastqs/{sample}_length_profile.txt"
+    shell:
+        '''
+        scripts/fastq_readlength_profile.py {input} > {output}
+        '''
+
+onsuccess:
+    shell("rm -r data/temp_converted/")
+    print("Workflow finished!")
