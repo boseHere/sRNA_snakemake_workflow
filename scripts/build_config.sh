@@ -16,6 +16,7 @@ echo "aligning: " >> config.yaml
 echo "    multi_map_handler: u " >> config.yaml
 echo "    sort_memory : 20G " >> config.yaml
 echo "    no_mirna : Y " >> config.yaml
+echo "    mismatches : 0 " >> config.yaml
 
 echo " " >> config.yaml
 
@@ -57,8 +58,8 @@ for file in genomes/*/*.fasta; do
     if [ "$section" == "filter_rna" ]; then
         echo "    filter_rna : ./genomes/filter_rna/"$build >> config.yaml
         arr+=( "filter_rna" )
-    elif [ "$section" == "chloro_mitochondria" ]; then
-        echo "    chloro_mitochondria : ./genomes/chloro_mitochondria/"$build \
+    elif [ "$section" == "chloro_mitocondrion" ]; then
+        echo "    chloro_mitochondria : ./genomes/chloro_mitocondrion/"$build \
         >> config.yaml
         arr+=( "chloro_mitochondria" )
     elif [ "$section" == "reference_genome" ]; then
@@ -95,7 +96,7 @@ if [ $(contains "${arr[@]}" "filter_rna") == "n" ]; then
 fi
 if [ $(contains "${arr[@]}" "chloro_mitochondria") == "n" ]; then
     echo
-    echo WARNING: No genome found in the /genome/chloro_mitchondria \
+    echo WARNING: No genome found in the /genome/chloro_mitchondira \
     directory. This filter is REQUIRED for this pipeline, and the pipeline \
     will not be able to run correctly without it. It is advised that the user \
     check that the genome containing chloroplast and mitochondria reads is in \

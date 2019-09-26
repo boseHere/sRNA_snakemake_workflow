@@ -8,14 +8,15 @@ trimming:
 aligning:
     multi_map_handler: u
     sort_memory : 20G
-    no_mirna : # Y for disabling miRNA alignment, N for enabling miRNA alignment
-
+    no_mirna : # Y for yes, N for no
+    mismatches : 0             
+ 
 
 threads:
-    filter_rna_bowtie : 5
-    filter_c_m_bowtie : 5
-    shortstack_cluster : 5
-    mapped_reads_samtools : 5
+    filter_rna_bowtie : 10
+    filter_c_m_bowtie : 10
+    shortstack_cluster : 10
+    mapped_reads_samtools : 10
     fastqc_report : 1
 
 

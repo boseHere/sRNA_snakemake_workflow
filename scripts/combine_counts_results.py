@@ -71,9 +71,9 @@ def get_library_sizes(args):
 
 def combine(args, library_sizes):
     """
-    This function takes as input the Counts.txt file, the Results.txt file, and
-    a list containing library sizes, ordered in the same order they appear in 
-    the input files. It opens the three output files for writing, creates and
+    This function takes as input the Counts.txt file, the Results.txt file, and a list
+    containing library sizes, ordered in the same order they appear in the
+    input files. It opens the three output files for writing, creates and
     writes the combined header, then processes each file one line at a time.
     :params: args -- An argparse object. Elements of the object can be accessed
                      by their option name as attributes)
@@ -139,13 +139,13 @@ def process(cline, rline, file1, file2, file3, library_sizes):
 
     # split first column (locus) into three columns containing its
     # consituent parts (chromosome, start base, and end base)
-    chro = rparts[0].split(":")[0]
+    chr = rparts[0].split(":")[0]
     start = rparts[0].split(":")[1].split("-")[0]
     end = rparts[0].split(":")[1].split("-")[1]
 
-    line1 = [chro, start, end] + rparts[1:] + cparts[2:] # counts in reads
-    line2 = [chro, start, end] + rparts[1:] + [cparts[2]] # counts in rpm
-    line3 = [chro, start, end] + rparts[1:] + [cparts[2]] # counts in rpkm
+    line1 = [chr, start, end] + rparts[1:] + cparts[2:] # counts in reads
+    line2 = [chr, start, end] + rparts[1:] + [cparts[2]] # counts in rpm
+    line3 = [chr, start, end] + rparts[1:] + [cparts[2]] # counts in rpkm
 
     gene_length = int(rparts[2])
 
