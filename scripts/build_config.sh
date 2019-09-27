@@ -59,7 +59,7 @@ for file in genomes/*/*.fasta; do
         echo "    filter_rna : ./genomes/filter_rna/"$build >> config.yaml
         arr+=( "filter_rna" )
     elif [ "$section" == "chloro_mitochondria" ]; then
-        echo "    chloro_mitochondria : ./genomes/chloro_mitocondria/"$build \
+        echo "    chloro_mitochondria : ./genomes/chloro_mitochondria/"$build \
         >> config.yaml
         arr+=( "chloro_mitochondria" )
     elif [ "$section" == "reference_genome" ]; then
