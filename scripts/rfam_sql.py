@@ -1,8 +1,8 @@
-#!/usr/bin/python3
+#!/usr/bin//env python3
 """
 Author: Maya Bose
 Date: 9/3/2019
-Purpose: This program takes an NCBI Taxonomy ID a produces a fasta file 
+Purpose: This program takes an NCBI Taxonomy ID and produces a fasta file 
 containing all non-miRNA reads for that species available from the Rfam 
 database: https://rfam.xfam.org/
 """
@@ -112,7 +112,7 @@ def make_genome(results, species, args):
                      returns the stored input for the filename option)
     """
     if args.filename == "_rfam_no_mirna.fasta":
-        o_filename = args.output_dir + getattr(args, "NCBI Species ID") \
+        o_filename = args.output_dir + species.replace(" ", "") \
                     + args.filename
     else: 
         o_filename = args.output_dir + args.filename
