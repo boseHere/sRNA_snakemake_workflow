@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/189301663.svg)](https://zenodo.org/badge/latestdoi/189301663)
+
 # sRNA Snakemake Workflow
 
 Runs an sRNA-seq data analysis pipeline on a collection of fastq.gz, fastq, fq, or fq.gz files.
