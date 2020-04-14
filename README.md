@@ -33,7 +33,7 @@ Runs an sRNA-seq data analysis pipeline on a collection of fastq.gz, fastq, fq, 
 * [Trimgalore](https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/) (tested with version 0.6.2)
 * [cutadapt](https://cutadapt.readthedocs.io/en/stable/installation.html) (tested with version 2.3)
 * [fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) (tested with version 0.11.7)
-* [samtools](http://www.htslib.org/doc/samtools.html)](samtools) (tested with version 1.9)
+* [samtools](http://www.htslib.org/doc/samtools.html) (tested with version 1.9)
 * [bowtie](http://bowtie-bio.sourceforge.net/manual.shtml) (tested with version 1.2.2)
 * [ShortStack](https://github.com/MikeAxtell/ShortStack) (tested with version 3.8.5)
 * [RNAfold](https://www.tbi.univie.ac.at/RNA/RNAfold.1.html) (tested with version 2.3.2)
