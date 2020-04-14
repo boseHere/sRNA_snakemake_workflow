@@ -10,7 +10,7 @@ Runs an sRNA-seq data analysis pipeline on a collection of fastq.gz, fastq, fq, 
   - [Table of Contents](#table-of-contents)
   - [Dependencies](#dependencies)
   - [How to Run the Pipeline](#how-to-run-the-pipeline)
-- [How Running Works](#how-running-works)
+- [Pipeline Ins and Outs](#pipeline-ins-and-outs)
   - [Directory Structure](#directory-structure)
   - [Editing Config](#editing-config)
     - [Build Default Config](#build-default-config)
@@ -67,7 +67,7 @@ If a previous snakemake process was interrupted, you may need to run the followi
 $ snakemake --unlock
 ```
 
-# How Running Works
+# Pipeline Ins and Outs
 
 ## Directory Structure
 
