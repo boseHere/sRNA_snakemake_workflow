@@ -268,7 +268,7 @@ If you are running the pipeline on a system with an older Linux kernel (which ca
 $ docker image pull bose1/mosher_lab_srna:ubuntu_16
 ```
 
-If you are running the pipeline using the Docker container, configure your sRNA Snakemake file directory and config.yaml file as directed in [How Running Works](#how-running-works). Then run the following from the top level of the directory structure:
+If you are running the pipeline using the Docker container, configure your sRNA Snakemake file directory and config.yaml file as directed in [Pipeline Ins and Outs](#pipeline-ins-and-outs). Then run the following from the top level of the directory structure:
 
 ```shell
 $ docker run mosher_lab_srna:ubuntu_18.sif snakemake --cores # INSERT MAX NUMBER OF CORES HERE
@@ -289,7 +289,7 @@ $ singularity pull docker://bose1/mosher_lab_srna:ubuntu_16
 
 Running either of these commands will download a .sif file. You will need to move this .sif file to the *same* location as the Snakefile.
 
-If you are running the pipeline using the Singularity container, configure your sRNA Snakemake file directory and config.yaml file as directed in [How Running Works](#how-running-works). Then run the following from the top level of the directory structure:
+If you are running the pipeline using the Singularity container, configure your sRNA Snakemake file directory and config.yaml file as directed in [Pipeline Ins and Outs](#pipeline-ins-and-outs). Then run the following from the top level of the directory structure:
 ```shell
 $ singularity exec mosher_lab_srna_ubuntu_18.sif snakemake --cores # INSERT MAX NUMBER OF CORES HERE
 ```
