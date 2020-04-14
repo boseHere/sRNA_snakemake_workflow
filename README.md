@@ -248,13 +248,13 @@ genomes:
 
 Containers are discrete, executable units of software that can be run as an isolated system, regardless of computing environment. 
 
-In the context of this pipeline, a container addresses potential issues with reproducibility and HPC compatability, in addition to allowing users to bypass the tedious process of installing all software dependencies. 
+In the context of this pipeline, a container addresses potential issues with reproducibility and HPC compatability, in addition to allowing users to bypass the tedious process of installing all of the software dependencies. 
 
-As the software used in this pipeline continue to be updated by developers, it is possible that processes run by this pipeline may no longer be supported by one of these updates. The container solves this problem by preserving the necessary software versions that are known to support this pipeline.
+With regards to reproducibility, as the software used in this pipeline continues to be updated by developers, it is possible that processes run by this pipeline may no longer be supported by one of these updates. This may prevent analysis from being reproducible in the future. The container solves this problem by preserving the necessary software versions that are known to support this pipeline.
 
 Some HPC systems do not allow users to freely install software on the server, or may only host an out of date version of the software. However, most HPC systems support the running of containers through either Docker or Singularity. 
 
-We have put together a Docker container as an alternative to installing all of the software dependencies independently. Running the pipeline using this container requires having either Docker or Singularity installed.   
+We have put together a container as an alternative to installing all of the software dependencies independently. Running the pipeline using this container requires having either Docker or Singularity installed.   
 
 ## Run with Docker
 
@@ -327,6 +327,10 @@ This flowchart demonstrates the steps of the pipeline, including what tools are 
 
 # References
 
+Andrews, S. (2010). FastQC:  A Quality Control Tool for High Throughput Sequence Data [Online]. Available online at: http://www.bioinformatics.babraham.ac.uk/projects/fastqc/
+
+Cutadapt. DOI:10.14806/ej.17.1.200.
+
 Grover JW, Kendall T, Baten A, Burgess D, Freeling M, King GJ, and Mosher RA.
     Maternal components of RNA ‐ directed DNA methylation are required for seed development in Brassica rapa.
     The Plant Journal. 2018. doi:10.1111/tpj.13910
@@ -338,3 +342,6 @@ Krueger, F. (2015). Trim galore.
     A wrapper tool around Cutadapt and FastQC to consistently apply quality 
     and adapter trimming to FastQ files.
 
+Langmead B, Trapnell C, Pop M, Salzberg SL. Ultrafast and memory-efficient alignment of short DNA sequences to the human genome. Genome Biol 10:R25.
+
+R. Lorenz, S.H. Bernhart, C. Hoener zu Siederdissen, H. Tafer, C. Flamm, P.F. Stadler and I.L. Hofacker (2011), "ViennaRNA Package 2.0", Algorithms for Molecular Biology: 6:26
