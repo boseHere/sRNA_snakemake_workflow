@@ -6,40 +6,39 @@ Runs an sRNA-seq data analysis pipeline on a collection of fastq.gz, fastq, fq, 
 
 ## Table of Contents
 
-* [Dependencies](#dependencies)
-  - [Get Dependencies With Singularity](#get-dependencies-with-singularity)
-* [How to Run the Pipeline](#how-to-run-the-pipeline)
+- [sRNA Snakemake Workflow](#srna-snakemake-workflow)
+  - [Table of Contents](#table-of-contents)
+  - [Dependencies](#dependencies)
+  - [How to Run the Pipeline](#how-to-run-the-pipeline)
+- [How Running Works](#how-running-works)
   - [Directory Structure](#directory-structure)
   - [Editing Config](#editing-config)
-    * [Build Default Config](#build-default-config)
-    * [Trimming](#trimming)
-    * [Aligning](#aligning)
-    * [Threads](#threads)
-    * [Paths](#paths)
-    * [Samples](#samples)
-    * [Genomes](#genomes)
-* [About the Output Files](#about-the-output-files)
-* [Flowchart of Pipeline Functions](#flowchart-of-pipeline-functions)
-* [References](#references)
+    - [Build Default Config](#build-default-config)
+      - [Trimming](#trimming)
+      - [Aligning](#aligning)
+      - [Threads](#threads)
+      - [Paths](#paths)
+      - [Samples](#samples)
+      - [Genomes](#genomes)
+- [Run Within A Container](#run-within-a-container)
+  - [Run with Docker](#run-with-docker)
+  - [Run with Singularity](#run-with-singularity)
+- [About the Output Files](#about-the-output-files)
+- [Flowchart of Pipeline Functions](#flowchart-of-pipeline-functions)
+- [References](#references)
 
 ## Dependencies
 
-Snakemake 5.4.5, Trimgalore 0.6.2, cutadapt 2.3. fastqc 0.11.7, samtools 1.9, bowtie 1.2.2, ShortStack 3.8.5, RNAfold 2.3.2, XZ Utils 5.2.2, liblzma 5.2.2
-
-### Get Dependencies With Singularity
-
-We have put together a Singularity container as an alternative to installing all of the software dependencies independently. Running the pipeline using this container requires having Singularity installed.    
-To pull the singularity image containing all the above software pre-installed into your current directory, run:
-```
-$ singularity pull docker://bose1/mosher_lab_srna:ubuntu_18
-```    
-
-If you are running the pipeline on a system with an older Linux kernel (which can often be the case on HPC systems), you may need to pull the Ubuntu 16.04 version of the container. This container will provide all the same software dependencies as the ubuntu 18.04 version of the container. To obtain this version of the container, run:    
-```shell
-$ singularity pull docker://bose1/mosher_lab_srna:ubuntu_16
-```
-
-Running either of these commands will download a .sif file. You will need to move this .sif file to the *same* location as the Snakefile.
+* [Snakemake](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html) (tested with version 5.4.5)
+* [Trimgalore](https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/) (tested with version 0.6.2)
+* [cutadapt](https://cutadapt.readthedocs.io/en/stable/installation.html) (tested with version 2.3)
+* [fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) (tested with version 0.11.7)
+* [samtools](http://www.htslib.org/doc/samtools.html)](samtools) (tested with version 1.9)
+* [bowtie](http://bowtie-bio.sourceforge.net/manual.shtml) (tested with version 1.2.2)
+* [ShortStack](https://github.com/MikeAxtell/ShortStack) (tested with version 3.8.5)
+* [RNAfold](https://www.tbi.univie.ac.at/RNA/RNAfold.1.html) (tested with version 2.3.2)
+* [XZ Utils](https://tukaani.org/xz)] (tested with version 5.2.2)
+* [liblzma](https://github.com/kobolabs/liblzma) (tested with version 5.2.2)
 
 ## How to Run the Pipeline
 
@@ -68,11 +67,9 @@ If a previous snakemake process was interrupted, you may need to run the followi
 $ snakemake --unlock
 ```
 
-If you are running the pipeline using the [singularity container](#get-dependencies-with-singularity), execute the following from the top level of the directory structure:
-```shell
-$ singularity exec mosher_lab_srna_ubuntu_18.sif snakemake --cores # INSERT MAX NUMBER OF CORES HERE
-```
-### Directory Structure
+# How Running Works
+
+## Directory Structure
 
 Ensure you have the following directory structure in place before running snakemake from the top level directory. This structure should be already in place if you download this repository with `git clone`, and should only require that you fill in your sample and genome files.
 
@@ -101,7 +98,7 @@ Ensure you have the following directory structure in place before running snakem
 
 As snakemake runs, the data folder will become populated with folders numbered by the order they are created.
 
-### Editing Config
+## Editing Config
 
 Editing the config.yaml file for this pipeline allows you to specify your files, reference genomes, software pathways, and trimming
 parameters. To edit the config file, run
@@ -112,11 +109,12 @@ $ nano config.yaml
 
 then fill out the sections as described below. Save by pressing `Ctrl-o` + `enter`, then exit the config file via `Ctrl-x`.
 
-#### Build Default Config
+### Build Default Config
 
 You have the option to either fill in all sections of the config.yaml file manually, or to allow our custom script ```build_config.sh``` to fill in the names of your samples and genomes according to what you have in your /data/1_raw/ and /genomes/ directories.
 
-This option was created because filling in the config.yaml with the names of your samples and genomes can be tedious, especially if you have a lot of samples or don't already have a list of all your sample filenames without their extensions. Further specifications on filling out the config file are noted in the config.yaml template that comes with the download of this pipeline, so feel free to fill it out manually if you prefer.
+This option was created because filling in the config.yaml with the names of your samples and genomes can be tedious, especially if you have a lot of samples or don't already have a list of all your sample filenames without their extensions. 
+Further specifications on filling out the config file are noted in the config.yaml template that comes with the download of this pipeline, so feel free to fill it out manually if you prefer.
 
 Otherwise, to have the config.yaml file automatically filled in with the names of your samples/genomes, simply run the following from the top level of the directory structure:
 
@@ -131,9 +129,9 @@ After this, run:
 $ nano config.yaml
 ```
 
-to proceed with filling in the [Trimming](#trimming), [Aligning](#aligning), [Threads](#threads), and [Paths](#paths) sections of the config file. These sections are not filled in manually by the ```build_config.sh``` program, and must be specified by the user. The following sections will explain more about these specifications.
+to proceed with filling in the [Trimming](#trimming), [Aligning](#aligning), [Threads](#threads), and [Paths](#paths) sections of the config file (or use your text editor of choice). These sections are not filled in manually by the ```build_config.sh``` program, and must be specified by the user. The following sections will explain more about these specifications.
 
-##### Trimming
+#### Trimming
 
 These config.yaml options are used by the [Trim Galore](https://github.com/FelixKrueger/TrimGalore/blob/master/Docs/Trim_Galore_User_Guide.md) program in the pipeline to size and quality select reads from the raw data files.
 
@@ -152,7 +150,7 @@ These config.yaml options are used by the [Trim Galore](https://github.com/Felix
 
 This pipeline (currently) will **not** work on sequences that have already been adapter-trimmed.
 
-##### Aligning
+#### Aligning
 
 These options are used by the [ShortStack](https://github.com/MikeAxtell/ShortStack) aligner to align reads to a reference genome.
 
@@ -161,9 +159,9 @@ These options are used by the [ShortStack](https://github.com/MikeAxtell/ShortSt
 * `sort_memory : <int>G`
     * Fill in the desired amount of memory to be allocated for sorting bam files. The default for this is 20G, though you may want to increase this if you find the pipeline crashing during the clustering step, or if you have many large sample files.
 * `no_mirna : <str>`
-    * Enter Y if you do **NOT** want to include miRNAs in the alignment. Enter N if you **DO** want to include miRNAs in the alignment.
+    * Enter Y if you do NOT want to perform miRNA annotation during the alignment. Enter N if you DO want to include the (optional) miRNAs annotation stage in the alignment.
 
-##### Threads
+#### Threads
 
 * `filter_rna_bowtie : <int>`
 * `filter_c_m_bowtie : <int>`
@@ -173,7 +171,7 @@ These options are used by the [ShortStack](https://github.com/MikeAxtell/ShortSt
 
 Set the number of threads for each program to run with. The advised defaults are 5 for bowtie, shortstack, and samtools, and 1 for fastqc, but these numbers can be scaled up or down given server limitations. It is advised not to go above 10 threads for each program, as this decreases the number of processes snakemake can run in parallel.
 
-##### Paths
+#### Paths
 
 Note: You do not need to fill in this section if you are running this pipeline through the Singularity container.
 
@@ -194,7 +192,7 @@ $ which Samtools
 
 If these lines return a path, leave this section as is upon downloading. 
 
-##### Samples
+#### Samples
 
 Give names of the sample files located in your /data/1_raw directory *without* file extensions.
 
@@ -209,7 +207,7 @@ samples:
 
 Sample names should be indented using 4 spaces (not the indent key), and be preceded by a dash character "-" and another space.
 
-##### Genomes
+#### Genomes
 
 Fill in the three absolute paths with the names of your genome files.
 
@@ -221,7 +219,7 @@ The genome file for this step can be obtained by running the following from the 
 
 ```shell
 $ chmod +x ./scripts/rfam_sql.py
-$ ./scripts/rfam_sql.py --output_dir ./../genomes/filter_rna/ <ncbi taxonomy id of your organism>
+$ ./scripts/rfam_sql.py --output_dir ../genomes/filter_rna/ <ncbi taxonomy id of your organism>
 ```
 
 The NCBI taxonomy ID of your organism can be obtained from by searching your organism name [here](https://www.ncbi.nlm.nih.gov/taxonomy).    
@@ -246,7 +244,58 @@ genomes:
     reference_genome : ./genomes/reference_genome/my_ref_genome
 ```
 
-## About the Output Files
+# Run Within A Container
+
+Containers are discrete, executable units of software that can be run as an isolated system, regardless of computing environment. 
+
+In the context of this pipeline, a container addresses potential issues with reproducibility and HPC compatability, in addition to allowing users to bypass the tedious process of installing all software dependencies. 
+
+As the software used in this pipeline continue to be updated by developers, it is possible that processes run by this pipeline may no longer be supported by one of these updates. The container solves this problem by preserving the necessary software versions that are known to support this pipeline.
+
+Some HPC systems do not allow users to freely install software on the server, or may only host an out of date version of the software. However, most HPC systems support the running of containers through either Docker or Singularity. 
+
+We have put together a Docker container as an alternative to installing all of the software dependencies independently. Running the pipeline using this container requires having either Docker or Singularity installed.   
+
+## Run with Docker
+
+ To pull the Docker image containing all the above software pre-installed into your current directory, run:
+```
+$ docker image pull bose1/mosher_lab_srna:ubuntu_18
+```
+
+If you are running the pipeline on a system with an older Linux kernel (which can often be the case on HPC systems), you may need to pull the Ubuntu 16.04 version of the container. This container will provide all the same software dependencies as the ubuntu 18.04 version of the container. To obtain this version of the container, run:    
+```shell
+$ docker image pull bose1/mosher_lab_srna:ubuntu_16
+```
+
+If you are running the pipeline using the Docker container, configure your sRNA Snakemake file directory and config.yaml file as directed in [How Running Works](#how-running-works). Then run the following from the top level of the directory structure:
+
+```shell
+$ docker run mosher_lab_srna:ubuntu_18.sif snakemake --cores # INSERT MAX NUMBER OF CORES HERE
+```
+
+
+## Run with Singularity
+
+To pull the singularity image containing all the above software pre-installed into your current directory, run:
+```
+$ singularity pull docker://bose1/mosher_lab_srna:ubuntu_18
+```    
+
+If you are running the pipeline on a system with an older Linux kernel (which can often be the case on HPC systems), you may need to pull the Ubuntu 16.04 version of the container. This container will provide all the same software dependencies as the ubuntu 18.04 version of the container. To obtain this version of the container, run:    
+```shell
+$ singularity pull docker://bose1/mosher_lab_srna:ubuntu_16
+```
+
+Running either of these commands will download a .sif file. You will need to move this .sif file to the *same* location as the Snakefile.
+
+If you are running the pipeline using the Singularity container, configure your sRNA Snakemake file directory and config.yaml file as directed in [How Running Works](#how-running-works). Then run the following from the top level of the directory structure:
+```shell
+$ singularity exec mosher_lab_srna_ubuntu_18.sif snakemake --cores # INSERT MAX NUMBER OF CORES HERE
+```
+
+
+# About the Output Files
 
 Once the pipeline has completed running, you will see 7 additional sub-directories appear in the /data/ directory alongside the 1_raw directory. These should include:
 
@@ -270,13 +319,13 @@ includes:
 
 * /7_fastqs/: This folder contains 1 fastq file for each sample provided as input to the pipeline. These files contain the reads that aligned to the reference genome.
 
-## Flowchart of Pipeline Functions
+# Flowchart of Pipeline Functions
 
 This flowchart demonstrates the steps of the pipeline, including what tools are used, what files are created, and where they are stored.
 
 ![Flowchart](dag.png)
 
-## References
+# References
 
 Grover JW, Kendall T, Baten A, Burgess D, Freeling M, King GJ, and Mosher RA.
     Maternal components of RNA ‐ directed DNA methylation are required for seed development in Brassica rapa.
